@@ -71,7 +71,6 @@ derby.log
 spark-warehouse/
 
 # Data files
-data/
 *.parquet
 *.csv
 
