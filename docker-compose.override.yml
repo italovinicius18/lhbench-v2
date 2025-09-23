@@ -1,0 +1,82 @@
+services:
+
+  spark-master:
+    container_name: spark-master
+    image: bitnami/spark:3.5.5
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_MASTER_WEBUI_PORT=8081
+    ports:
+      - "8081:8081"
+      - "7077:7077"
+    volumes:
+      - spark-data:/bitnami
+      - ./include:/usr/local/airflow/include
+    networks:
+      - airflow
+
+  spark-worker:
+    image: bitnami/spark:3.5.5
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=6
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_WORKER_WEBUI_PORT=8082
+    ports:
+      - "8082-8083:8082"
+    volumes:
+      - ./include:/usr/local/airflow/include
+      - spark-data:/bitnami
+    depends_on:
+      - spark-master
+    networks:
+      - airflow
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  # Serviço de armazenamento de objetos (MINIO)
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # Endpoint S3
+      - "9001:9001"   # Console web
+    volumes:
+      - ${MINIO_DATA_PATH}:/data
+    networks:
+      - airflow
+
+  # Serviço para criar os buckets no MINIO (init)
+  minio-init:
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    container_name: minio-init
+    depends_on:
+      - minio
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "sleep 10 &&
+       mc alias set datalake http://minio:9000 minioadmin minioadmin &&
+       mc mb datalake/bronze &&
+       mc mb datalake/silver &&
+       mc mb datalake/gold"
+    restart: "no"
+    networks:
+      - airflow
+
+volumes:
+  spark-data:
