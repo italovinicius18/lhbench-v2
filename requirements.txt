@@ -8,3 +8,4 @@ deltalake
 pyspark==3.5.5
 pyarrow
 boto3
+duckdb

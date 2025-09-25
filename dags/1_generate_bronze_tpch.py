@@ -1,386 +1,418 @@
 """
-DAG para geração de dados TPC-H sintéticos usando tpchgen-cli
-Gera dados diretamente no MinIO usando boto3 para máxima eficiência.
+DAG para geração de dados TPC-H usando DuckDB com extensão nativa
+Gera dados diretamente no MinIO via S3 usando DuckDB + TPC-H extension
+Muito mais eficiente que geradores externos!
 """
 
 from airflow.decorators import dag, task
-from airflow.models import Variable
 from datetime import datetime
 import subprocess
-import tempfile
 import os
-import boto3
-from botocore.exceptions import ClientError
 
 # Configurações TPC-H
 SCALE_FACTOR = 1  # Comece com SF=1 (cerca de 1GB)
-MINIO_ENDPOINT = Variable.get("MINIO_ENDPOINT", "http://localhost:9000")
-MINIO_ACCESS_KEY = Variable.get("MINIO_ACCESS_KEY", "minioadmin")
-MINIO_SECRET_KEY = Variable.get("MINIO_SECRET_KEY", "minioadmin")
-BUCKET_BRONZE = "bronze"
-
-
-def get_minio_client():
-    """Cria cliente MinIO usando boto3"""
-    return boto3.client(
-        's3',
-        endpoint_url=MINIO_ENDPOINT,
-        aws_access_key_id=MINIO_ACCESS_KEY,
-        aws_secret_access_key=MINIO_SECRET_KEY,
-        region_name='us-east-1'
-    )
+MINIO_ENDPOINT = "http://minio:9000"
+MINIO_ACCESS_KEY = "minioadmin"
+MINIO_SECRET_KEY = "minioadmin"
+BRONZE_BUCKET = "bronze"
 
 
 @dag(
-    dag_id="generate_tpch_bronze_direct",
+    dag_id="1_generate_bronze_tpch",
     start_date=datetime(2025, 1, 1),
-    schedule="@hourly",
+    schedule=None,  # Execução manual
     catchup=False,
-    tags=["tpch", "bronze", "minio-direct", "streaming"],
+    tags=["tpch", "bronze", "duckdb", "minio", "s3"],
     max_active_runs=1,
     params={
-        "scale_factor": 1,
+        "scale_factor": 10,
         "force_regenerate": False,
-        "start_part": 1,
-        "end_part": 2,
+        "parallel_children": 5,
+        "output_format": "csv"  # csv ou parquet
     },
 )
 def generate_tpch_bronze_direct():
 
     @task
-    def setup_minio():
-        """Configura o bucket no MinIO"""
-        print("🔧 Configurando MinIO...")
-        
-        s3_client = get_minio_client()
-        
-        # Criar bucket se não existir
-        try:
-            s3_client.head_bucket(Bucket=BUCKET_BRONZE)
-            print(f"✅ Bucket {BUCKET_BRONZE} já existe")
-        except ClientError:
-            try:
-                s3_client.create_bucket(Bucket=BUCKET_BRONZE)
-                print(f"✅ Bucket {BUCKET_BRONZE} criado")
-            except Exception as e:
-                print(f"❌ Erro ao criar bucket: {e}")
-                raise
-        
-        return {"bucket": BUCKET_BRONZE, "endpoint": MINIO_ENDPOINT}
-
-    @task
-    def check_existing_scale_factor(**context):
-        """Verifica se o scale factor já foi processado"""
+    def check_existing_data(**context):
+        """Verifica se os dados TPC-H já existem no S3"""
         
         params = context["params"]
         scale_factor = params.get("scale_factor", SCALE_FACTOR)
         force_regenerate = params.get("force_regenerate", False)
+        output_format = params.get("output_format", "parquet")
 
-        print(f"🔍 Verificando Scale Factor {scale_factor}")
-
-        s3_client = get_minio_client()
+        print(f"🔍 Verificando dados existentes para Scale Factor {scale_factor}")
         
-        # Verificar se já existe dados para este scale factor
+        s3_path = f"sf_{scale_factor}"
+        
+        if force_regenerate:
+            print("🔄 Forçando regeneração dos dados")
+            return {
+                "scale_factor": scale_factor,
+                "needs_generation": True,
+                "s3_path": s3_path,
+                "output_format": output_format
+            }
+        
+        # Verificar se tabelas existem no S3
         try:
-            response = s3_client.list_objects_v2(
-                Bucket=BUCKET_BRONZE,
-                Prefix=f"sf{scale_factor}/",
-                MaxKeys=1000
+            import boto3
+            from botocore.exceptions import ClientError
+            
+            s3_client = boto3.client(
+                's3',
+                endpoint_url=MINIO_ENDPOINT,
+                aws_access_key_id=MINIO_ACCESS_KEY,
+                aws_secret_access_key=MINIO_SECRET_KEY
             )
             
-            scale_factor_exists = False
-            if 'Contents' in response:
-                # Verifica se existe pelo menos 8 tabelas (as 8 tabelas do TPC-H)
-                tables_found = set()
-                for obj in response['Contents']:
-                    for table in ["customer", "lineitem", "nation", "orders", "part", "partsupp", "region", "supplier"]:
-                        if f"sf{scale_factor}/{table}/" in obj['Key']:
-                            tables_found.add(table)
-                
-                if len(tables_found) >= 8:
-                    scale_factor_exists = True
-
-            needs_generation = force_regenerate or not scale_factor_exists
-
-            if scale_factor_exists and not force_regenerate:
-                print(f"⚠️ Scale Factor {scale_factor} já existe. Use force_regenerate=True para regerar")
-            else:
-                print(f"✅ Scale Factor {scale_factor} será gerado")
-
-            return {"scale_factor": scale_factor, "needs_generation": needs_generation}
+            # Tabelas TPC-H esperadas
+            tpch_tables = ["customer", "lineitem", "nation", "orders", "part", "partsupp", "region", "supplier"]
+            tables_found = []
             
+            for table in tpch_tables:
+                table_prefix = f"{s3_path}/{table}/"
+                try:
+                    response = s3_client.list_objects_v2(
+                        Bucket=BRONZE_BUCKET,
+                        Prefix=table_prefix,
+                        MaxKeys=1
+                    )
+                    if response.get('Contents'):
+                        tables_found.append(table)
+                        print(f"   ✅ {table}: dados encontrados")
+                    else:
+                        print(f"   ❌ {table}: sem dados")
+                except ClientError:
+                    print(f"   ❌ {table}: erro ao verificar")
+            
+            if len(tables_found) == len(tpch_tables):
+                print(f"✅ Todas as tabelas TPC-H SF {scale_factor} já existem no S3")
+                return {
+                    "scale_factor": scale_factor,
+                    "needs_generation": False,
+                    "s3_path": s3_path,
+                    "output_format": output_format,
+                    "existing_tables": tables_found
+                }
+            else:
+                print(f"📋 Encontradas {len(tables_found)}/{len(tpch_tables)} tabelas. Geração necessária.")
+                return {
+                    "scale_factor": scale_factor,
+                    "needs_generation": True,
+                    "s3_path": s3_path,
+                    "output_format": output_format
+                }
+                
         except Exception as e:
             print(f"❌ Erro ao verificar dados existentes: {e}")
-            return {"scale_factor": scale_factor, "needs_generation": True}
+            # Em caso de erro, assumir que precisa gerar
+            return {
+                "scale_factor": scale_factor,
+                "needs_generation": True,
+                "s3_path": s3_path,
+                "output_format": output_format
+            }
 
     @task
-    def generate_and_upload_tpch(check_result: dict, **context):
-        """Gera dados TPC-H e faz upload direto para MinIO usando boto3"""
+    def generate_tpch_data_duckdb(check_result: dict, **context):
+        """Gera dados TPC-H usando DuckDB e salva diretamente no S3/MinIO"""
 
         if not check_result["needs_generation"]:
             print("⏭️ Pulando geração - dados já existem")
             return {"skipped": True}
 
-        params = context["params"]
         scale_factor = check_result["scale_factor"]
-        start_part = params.get("start_part", 1)
-        end_part = params.get("end_part", 2)
+        s3_path = check_result["s3_path"]
+        output_format = check_result["output_format"]
+        
+        params = context["params"]
+        parallel_children = params.get("parallel_children", 4)
 
         batch_timestamp = datetime.now()
         batch_id = batch_timestamp.strftime("%Y%m%d_%H%M%S")
 
-        print(f"🚀 Iniciando geração TPC-H Scale Factor {scale_factor}")
+        print(f"🚀 Iniciando geração TPC-H com DuckDB")
+        print(f"📊 Scale Factor: {scale_factor}")
         print(f"📅 Batch ID: {batch_id}")
-        print(f"🔢 Partições: {start_part} até {end_part}")
-
-        # Tabelas TPC-H (mantendo nomes originais)
-        tpch_tables = [
-            "customer",
-            "lineitem", 
-            "nation",
-            "orders",
-            "part",
-            "partsupp",
-            "region",
-            "supplier"
-        ]
-
-        s3_client = get_minio_client()
-        total_files = 0
-        total_size = 0
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-
-            # Gerar partições incrementais para tabelas lineitem e orders
-            for part_num in range(start_part, end_part + 1):
-                print(f"🔢 Processando partição {part_num}")
-
-                # Diretório para esta partição
-                part_dir = os.path.join(temp_dir, f"part_{part_num}")
-                os.makedirs(part_dir, exist_ok=True)
-
-                # Gerar apenas lineitem e orders com partições (as tabelas grandes)
-                for table in ["lineitem", "orders"]:
-                    gen_cmd = [
-                        "tpchgen-cli",
-                        "--tables", table,
-                        "--scale-factor", str(scale_factor),
-                        "--format", "tbl",
-                        "--output-dir", part_dir,
-                        "--parts", "10",  # Total de 10 partições
-                        "--part", str(part_num),
-                    ]
-
-                    print(f"🔧 Gerando: {' '.join(gen_cmd)}")
-
-                    # Gerar dados
-                    result = subprocess.run(gen_cmd, capture_output=True, text=True)
-
-                    if result.returncode != 0:
-                        print(f"❌ Erro ao gerar {table} part {part_num}: {result.stderr}")
-                        continue
-
-                    print(f"✅ {table} partição {part_num} gerado com sucesso")
-
-                # Upload dos arquivos desta partição usando boto3
-                for root, dirs, files in os.walk(part_dir):
-                    for file in files:
-                        if file.endswith(".tbl"):
-                            local_path = os.path.join(root, file)
-                            file_size = os.path.getsize(local_path)
-
-                            # Extrair nome da tabela do arquivo
-                            table_name = None
-                            for tpch_table in tpch_tables:
-                                if tpch_table in file or tpch_table in root:
-                                    table_name = tpch_table
-                                    break
-
-                            if not table_name:
-                                continue
-
-                            # Caminho no MinIO: sf{scale_factor}/{table_name}/{file}
-                            s3_key = f"sf{scale_factor}/{table_name}/{file}"
-
-                            print(f"⬆️ Upload: {file} ({file_size:,} bytes) -> s3://{BUCKET_BRONZE}/{s3_key}")
-
-                            try:
-                                # Upload usando boto3
-                                s3_client.upload_file(local_path, BUCKET_BRONZE, s3_key)
-                                print(f"✅ Upload concluído: {file}")
-                                total_files += 1
-                                total_size += file_size
-                            except Exception as e:
-                                print(f"❌ Erro no upload: {e}")
-                                raise Exception(f"Falha no upload de {file}: {e}")
-
-            # Gerar tabelas dimensão (sem particionamento) apenas uma vez
-            if start_part == 1:  # Só na primeira partição
-                for tpch_table in tpch_tables:
-                    if tpch_table in ["lineitem", "orders"]:
-                        continue  # Já processadas acima
-
-                    print(f"📊 Processando tabela dimensão: {tpch_table}")
-
-                    # Diretório temporário para esta tabela
-                    table_dir = os.path.join(temp_dir, tpch_table)
-                    os.makedirs(table_dir, exist_ok=True)
-
-                    # Comando tpchgen-cli para tabela específica
-                    gen_cmd = [
-                        "tpchgen-cli",
-                        "--scale-factor", str(scale_factor),
-                        "--tables", tpch_table,
-                        "--format", "tbl",
-                        "--output-dir", table_dir,
-                        "--parts", "4",  # 4 partições para paralelismo
-                    ]
-
-                    print(f"🔧 Gerando: {' '.join(gen_cmd)}")
-
-                    # Gerar dados
-                    result = subprocess.run(gen_cmd, capture_output=True, text=True)
-
-                    if result.returncode != 0:
-                        print(f"❌ Erro ao gerar {tpch_table}: {result.stderr}")
-                        continue
-
-                    print(f"✅ {tpch_table} gerado com sucesso")
-
-                    # Upload de todos os arquivos da tabela
-                    for root, dirs, files in os.walk(table_dir):
-                        for file in files:
-                            if file.endswith(".tbl"):
-                                local_path = os.path.join(root, file)
-                                file_size = os.path.getsize(local_path)
-
-                                # Caminho no MinIO: sf{scale_factor}/{table_name}/{file}
-                                s3_key = f"sf{scale_factor}/{tpch_table}/{file}"
-
-                                print(f"⬆️ Upload: {file} ({file_size:,} bytes) -> s3://{BUCKET_BRONZE}/{s3_key}")
-
-                                try:
-                                    # Upload usando boto3
-                                    s3_client.upload_file(local_path, BUCKET_BRONZE, s3_key)
-                                    print(f"✅ Upload concluído: {file}")
-                                    total_files += 1
-                                    total_size += file_size
-                                except Exception as e:
-                                    print(f"❌ Erro no upload: {e}")
-                                    raise Exception(f"Falha no upload de {file}: {e}")
-
-                    print(f"🗑️ Limpando arquivos temporários de {tpch_table}")
-
-        print(f"🎉 Geração e upload completos!")
-        print(f"📊 Estatísticas finais:")
-        print(f"   - Scale Factor: {scale_factor}")
-        print(f"   - Partições processadas: {end_part - start_part + 1}")
-        print(f"   - Arquivos enviados: {total_files}")
-        print(f"   - Tamanho total: {total_size:,} bytes ({total_size/1024/1024:.2f} MB)")
-        print(f"   - Batch ID: {batch_id}")
-
-        return {
-            "batch_id": batch_id,
-            "scale_factor": scale_factor,
-            "files_uploaded": total_files,
-            "total_size_bytes": total_size,
-            "skipped": False,
-        }
-
-    @task
-    def verify_upload(upload_result: dict):
-        """Verifica se os dados foram carregados corretamente no MinIO"""
-
-        if upload_result.get("skipped"):
-            print("⏭️ Verificação pulada - nenhum dado foi gerado")
-            return upload_result
-
-        scale_factor = upload_result["scale_factor"]
-
-        print(f"🔍 Verificando upload do Scale Factor {scale_factor}")
-
-        s3_client = get_minio_client()
+        print(f"📂 Destino S3: s3://{BRONZE_BUCKET}/{s3_path}/")
+        print(f"📄 Formato: {output_format}")
+        print(f"🔄 Paralelismo: {parallel_children} partições")
 
         try:
-            # Listar arquivos no MinIO
-            response = s3_client.list_objects_v2(
-                Bucket=BUCKET_BRONZE,
-                Prefix=f"sf{scale_factor}/",
-                MaxKeys=1000
-            )
-
-            if 'Contents' in response:
-                sf_files = [
-                    obj for obj in response['Contents'] 
-                    if f"sf{scale_factor}/" in obj['Key']
-                ]
-
-                print(f"✅ Verificação concluída")
-                print(f"📁 Arquivos encontrados para SF {scale_factor}: {len(sf_files)}")
-
-                total_size = 0
-                for obj in sf_files[:10]:  # Mostrar primeiros 10
-                    size_mb = obj['Size'] / (1024 * 1024)
-                    total_size += obj['Size']
-                    print(f"   📄 {obj['Key']} ({size_mb:.2f} MB)")
-
-                if len(sf_files) > 10:
-                    print(f"   ... e mais {len(sf_files) - 10} arquivos")
+            import duckdb
+            
+            # Criar conexão DuckDB
+            conn = duckdb.connect(':memory:')
+            print("✅ Conexão DuckDB estabelecida")
+            
+            # Instalar e carregar extensão TPC-H
+            conn.execute("INSTALL tpch;")
+            conn.execute("LOAD tpch;")
+            print("✅ Extensão TPC-H carregada")
+            
+            # Configurar S3 settings para MinIO
+            conn.execute(f"""
+                SET s3_endpoint = '{MINIO_ENDPOINT.replace('http://', '')}';
+                SET s3_access_key_id = '{MINIO_ACCESS_KEY}';
+                SET s3_secret_access_key = '{MINIO_SECRET_KEY}';
+                SET s3_use_ssl = false;
+                SET s3_url_style = 'path';
+            """)
+            print("✅ Configuração S3 definida")
+            
+            # Tabelas TPC-H
+            tpch_tables = ["customer", "lineitem", "nation", "orders", "part", "partsupp", "region", "supplier"]
+            
+            generation_results = []
+            
+            # Gerar dados em paralelo usando children/step approach
+            if parallel_children > 1:
+                print(f"🔄 Gerando dados em {parallel_children} partições paralelas...")
                 
-                # Calcular tamanho total de todos os arquivos
-                for obj in sf_files[10:]:
-                    total_size += obj['Size']
-                
-                print(f"📊 Tamanho total no MinIO: {total_size / (1024 * 1024):.2f} MB")
+                for step in range(parallel_children):
+                    print(f"📦 Gerando partição {step + 1}/{parallel_children}")
+                    
+                    # Gerar dados para esta partição
+                    conn.execute(f"""
+                        CALL dbgen(
+                            sf = {scale_factor}, 
+                            children = {parallel_children}, 
+                            step = {step}
+                        );
+                    """)
+                    
+                    # Exportar cada tabela para S3
+                    for table in tpch_tables:
+                        if output_format.lower() == "parquet":
+                            s3_url = f"s3://{BRONZE_BUCKET}/{s3_path}/{table}/part_{step:03d}.parquet"
+                            conn.execute(f"COPY {table} TO '{s3_url}' (FORMAT PARQUET);")
+                        else:  # CSV
+                            s3_url = f"s3://{BRONZE_BUCKET}/{s3_path}/{table}/part_{step:03d}.csv"
+                            conn.execute(f"COPY {table} TO '{s3_url}' (FORMAT CSV, HEADER);")
+                        
+                        print(f"   ✅ {table} partição {step} → {s3_url}")
+                    
+                    # Limpar tabelas para próxima partição
+                    for table in tpch_tables:
+                        conn.execute(f"DROP TABLE IF EXISTS {table};")
+                        
             else:
-                print("❌ Nenhum arquivo encontrado no MinIO!")
+                print("📦 Gerando dados em partição única...")
                 
+                # Gerar dados
+                conn.execute(f"CALL dbgen(sf = {scale_factor});")
+                print("✅ Dados TPC-H gerados na memória")
+                
+                # Exportar cada tabela para S3
+                for table in tpch_tables:
+                    if output_format.lower() == "parquet":
+                        s3_url = f"s3://{BRONZE_BUCKET}/{s3_path}/{table}/{table}.parquet"
+                        conn.execute(f"COPY {table} TO '{s3_url}' (FORMAT PARQUET);")
+                    else:  # CSV
+                        s3_url = f"s3://{BRONZE_BUCKET}/{s3_path}/{table}/{table}.csv"
+                        conn.execute(f"COPY {table} TO '{s3_url}' (FORMAT CSV, HEADER);")
+                    
+                    # Obter estatísticas da tabela
+                    result = conn.execute(f"SELECT COUNT(*) as rows FROM {table};").fetchone()
+                    row_count = result[0] if result else 0
+                    
+                    generation_results.append({
+                        "table": table,
+                        "s3_url": s3_url,
+                        "row_count": row_count
+                    })
+                    
+                    print(f"   ✅ {table}: {row_count:,} linhas → {s3_url}")
+            
+            # Fechar conexão
+            conn.close()
+            
+            print(f"🎉 Geração TPC-H concluída com sucesso!")
+            print(f"📊 Estatísticas:")
+            print(f"   - Scale Factor: {scale_factor}")
+            print(f"   - Tabelas: {len(tpch_tables)}")
+            print(f"   - Formato: {output_format}")
+            print(f"   - Localização: s3://{BRONZE_BUCKET}/{s3_path}/")
+            print(f"   - Batch ID: {batch_id}")
+
+            return {
+                "batch_id": batch_id,
+                "scale_factor": scale_factor,
+                "tables_generated": len(tpch_tables),
+                "s3_path": s3_path,
+                "output_format": output_format,
+                "generation_results": generation_results,
+                "skipped": False,
+            }
+            
         except Exception as e:
-            print(f"❌ Erro na verificação: {e}")
-
-        print("🏗️ Dados TPC-H prontos no MinIO!")
-
-        return upload_result
+            print(f"❌ Erro na geração TPC-H: {e}")
+            raise
 
     @task
-    def install_dependencies():
-        """Instala dependências necessárias"""
-        print("📦 Instalando dependências...")
-        
-        try:
-            # Verificar se tpchgen-cli está instalado
-            result = subprocess.run(["tpchgen-cli", "--version"], capture_output=True, text=True)
-            if result.returncode == 0:
-                print("✅ tpchgen-cli já instalado")
-            else:
-                raise Exception("tpchgen-cli não encontrado")
-        except:
-            print("📥 Instalando tpchgen-cli...")
-            result = subprocess.run(["pip", "install", "tpchgen-cli"], capture_output=True, text=True)
-            if result.returncode != 0:
-                raise Exception(f"Erro ao instalar tpchgen-cli: {result.stderr}")
-            print("✅ tpchgen-cli instalado")
-        
-        # Verificar boto3
+    def verify_s3_data(generation_result: dict):
+        """Verifica se os dados foram salvos corretamente no S3"""
+
+        if generation_result.get("skipped"):
+            print("⏭️ Verificação pulada - nenhum dado foi gerado")
+            return generation_result
+
+        scale_factor = generation_result["scale_factor"]
+        s3_path = generation_result["s3_path"]
+        output_format = generation_result["output_format"]
+
+        print(f"🔍 Verificando dados TPC-H no S3")
+        print(f"📊 Scale Factor: {scale_factor}")
+        print(f"📂 Caminho S3: s3://{BRONZE_BUCKET}/{s3_path}/")
+        print(f"📄 Formato: {output_format}")
+
         try:
             import boto3
-            print("✅ boto3 já disponível")
-        except ImportError:
-            print("📥 Instalando boto3...")
-            result = subprocess.run(["pip", "install", "boto3"], capture_output=True, text=True)
-            if result.returncode != 0:
-                raise Exception(f"Erro ao instalar boto3: {result.stderr}")
-            print("✅ boto3 instalado")
+            from botocore.exceptions import ClientError
+            
+            s3_client = boto3.client(
+                's3',
+                endpoint_url=MINIO_ENDPOINT,
+                aws_access_key_id=MINIO_ACCESS_KEY,
+                aws_secret_access_key=MINIO_SECRET_KEY
+            )
+            
+            # Tabelas TPC-H esperadas
+            tpch_tables = ["customer", "lineitem", "nation", "orders", "part", "partsupp", "region", "supplier"]
+            
+            verification_results = []
+            total_objects = 0
+            total_size_bytes = 0
+
+            for table in tpch_tables:
+                table_prefix = f"{s3_path}/{table}/"
+                
+                try:
+                    # Listar objetos da tabela
+                    response = s3_client.list_objects_v2(
+                        Bucket=BRONZE_BUCKET,
+                        Prefix=table_prefix
+                    )
+                    
+                    if 'Contents' in response:
+                        objects = response['Contents']
+                        table_objects = len(objects)
+                        table_size = sum(obj['Size'] for obj in objects)
+                        
+                        total_objects += table_objects
+                        total_size_bytes += table_size
+                        
+                        verification_results.append({
+                            "table": table,
+                            "objects": table_objects,
+                            "size_mb": table_size / (1024 * 1024),
+                            "status": "✅ OK"
+                        })
+                        
+                        print(f"   ✅ {table}: {table_objects} arquivos, {table_size / (1024 * 1024):.2f} MB")
+                    else:
+                        verification_results.append({
+                            "table": table,
+                            "status": "❌ Sem dados"
+                        })
+                        print(f"   ❌ {table}: nenhum arquivo encontrado")
+                        
+                except ClientError as e:
+                    verification_results.append({
+                        "table": table,
+                        "status": f"❌ Erro: {e}"
+                    })
+                    print(f"   ❌ {table}: erro ao verificar - {e}")
+
+            # Resumo da verificação
+            successful_tables = len([r for r in verification_results if r["status"] == "✅ OK"])
+            
+            print(f"\n📊 Resumo da Verificação:")
+            print(f"   - Tabelas verificadas: {successful_tables}/{len(tpch_tables)}")
+            print(f"   - Objetos totais: {total_objects}")
+            print(f"   - Tamanho total: {total_size_bytes / (1024 * 1024):.2f} MB")
+            print(f"   - Localização: s3://{BRONZE_BUCKET}/{s3_path}/")
+
+            if successful_tables == len(tpch_tables):
+                print("🎉 Todas as tabelas TPC-H foram salvas no S3 com sucesso!")
+                return {
+                    **generation_result,
+                    "verification_status": "success",
+                    "tables_verified": successful_tables,
+                    "total_objects": total_objects,
+                    "total_size_mb": total_size_bytes / (1024 * 1024)
+                }
+            else:
+                print("⚠️ Algumas tabelas não foram encontradas no S3")
+                return {
+                    **generation_result,
+                    "verification_status": "partial",
+                    "tables_verified": successful_tables,
+                    "total_objects": total_objects,
+                    "total_size_mb": total_size_bytes / (1024 * 1024)
+                }
+                
+        except Exception as e:
+            print(f"❌ Erro na verificação S3: {e}")
+            return {
+                **generation_result,
+                "verification_status": "error",
+                "error": str(e)
+            }
+
+    @task
+    def create_summary_report(verification_result: dict):
+        """Cria relatório final de geração"""
         
-        return {"dependencies": "installed"}
+        if verification_result.get("skipped"):
+            print("⏭️ Relatório pulado - dados não foram gerados")
+            return verification_result
+        
+        print("� Gerando relatório final...")
+        
+        scale_factor = verification_result["scale_factor"]
+        s3_path = verification_result["s3_path"]
+        output_format = verification_result["output_format"]
+        
+        print(f"\n🎯 RELATÓRIO TPC-H - GERAÇÃO BRONZE")
+        print(f"=" * 50)
+        print(f"📊 Scale Factor: {scale_factor}")
+        print(f"📅 Data/Hora: {datetime.now()}")
+        print(f"🏷️ Batch ID: {verification_result['batch_id']}")
+        print(f"📂 Localização S3: s3://{BRONZE_BUCKET}/{s3_path}/")
+        print(f"� Formato: {output_format}")
+        print(f"")
+        print(f"📋 Tabelas TPC-H:")
+        print(f"   customer, lineitem, nation, orders")
+        print(f"   part, partsupp, region, supplier")
+        print(f"")
+        print(f"📊 Estatísticas:")
+        
+        if verification_result.get("verification_status") == "success":
+            print(f"   ✅ Status: SUCESSO")
+            print(f"   📁 Tabelas: {verification_result.get('tables_verified', 0)}/8")
+            print(f"   📄 Arquivos: {verification_result.get('total_objects', 0)}")
+            print(f"   � Tamanho: {verification_result.get('total_size_mb', 0):.2f} MB")
+        else:
+            print(f"   ⚠️ Status: {verification_result.get('verification_status', 'UNKNOWN')}")
+        
+        print(f"")
+        print(f"🔗 Acesso via MinIO Console: http://localhost:9001")
+        print(f"🔗 Bucket Bronze: {BRONZE_BUCKET}")
+        print(f"=" * 50)
+        
+        return verification_result
 
-    # Pipeline de execução
-    check_task = check_existing_scale_factor()
-    generate_task = generate_and_upload_tpch(check_task)
-    verify_task = verify_upload(generate_task)
+    # Pipeline de execução otimizado
+    check_task = check_existing_data()
+    generate_task = generate_tpch_data_duckdb(check_task)
+    verify_task = verify_s3_data(generate_task)
+    summary_task = create_summary_report(verify_task)
 
-    # Dependências
-    check_task >> generate_task >> verify_task
+    # Dependências do pipeline
+    check_task >> generate_task >> verify_task >> summary_task
 
 
 generate_tpch_bronze_direct()
