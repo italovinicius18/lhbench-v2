@@ -7,7 +7,7 @@ import time
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 
-from .config import config
+from config import LHBenchConfig
 
 # Importações opcionais para AWS/S3
 try:
@@ -20,6 +20,7 @@ except ImportError:
 
 def setup_logging(log_level: str = None) -> logging.Logger:
     """Configura logging estruturado"""
+    from config import config
     level = getattr(logging, (log_level or config.log_level).upper())
     
     # Formatter personalizado

@@ -7,8 +7,8 @@ import logging
 from datetime import datetime
 from typing import Dict, Any
 
-from .config import config
-from .utils import setup_logging, save_results, validate_bronze_data, Timer, print_summary_banner
+# Config será passado como parâmetro
+from utils import setup_logging, save_results, validate_bronze_data, Timer, print_summary_banner
 
 def generate_bronze_data(scale_factor: int = None, force_regenerate: bool = None) -> Dict[str, Any]:
     """

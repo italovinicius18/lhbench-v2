@@ -9,9 +9,9 @@ from datetime import datetime
 from typing import Dict, Any, List
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
 
-from .config import config
-from .utils import setup_logging, save_results, validate_silver_data, Timer, print_summary_banner
-from .tpch_queries import TPCH_QUERIES
+# Config será passado como parâmetro
+from utils import setup_logging, save_results, validate_silver_data, Timer, print_summary_banner
+from tpch_queries import TPCH_QUERIES
 
 def create_spark_session(app_name: str = "LHBench-Benchmark"):
     """Cria sessão Spark para benchmark"""

@@ -7,8 +7,8 @@ from datetime import datetime
 from typing import Dict, Any, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from .config import config
-from .utils import setup_logging, save_results, validate_bronze_data, validate_silver_data, Timer, print_summary_banner
+# Config será passado como parâmetro
+from utils import setup_logging, save_results, validate_bronze_data, validate_silver_data, Timer, print_summary_banner
 
 def create_spark_session(app_name: str = "LHBench-Silver"):
     """Cria sessão Spark com configurações necessárias"""

@@ -1,0 +1,379 @@
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO |                         LHBENCH TPC-H PIPELINE COMPLETO                         
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | Execution ID: 20250930_123604
+2025-09-30 12:36:04 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:04 | lhbench | INFO | Formatos Benchmark: delta
+2025-09-30 12:36:04 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:04 | lhbench | INFO | Skip Bronze: False
+2025-09-30 12:36:04 | lhbench | INFO | Skip Silver: False
+2025-09-30 12:36:04 | lhbench | INFO | Skip Benchmark: False
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | 🥉 ETAPA 1: Geração de dados Bronze
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO |                            GERAÇÃO DADOS TPC-H BRONZE                           
+2025-09-30 12:36:04 | lhbench | INFO |                            GERAÇÃO DADOS TPC-H BRONZE                           
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:04 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:04 | lhbench | INFO | Formato: parquet
+2025-09-30 12:36:04 | lhbench | INFO | Formato: parquet
+2025-09-30 12:36:04 | lhbench | INFO | Force Regenerate: True
+2025-09-30 12:36:04 | lhbench | INFO | Force Regenerate: True
+2025-09-30 12:36:04 | lhbench | INFO | MinIO Endpoint: http://minio:9000
+2025-09-30 12:36:04 | lhbench | INFO | MinIO Endpoint: http://minio:9000
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:04 | lhbench | INFO | 🚀 Iniciando Geração TPC-H Bronze
+2025-09-30 12:36:04 | lhbench | INFO | 🚀 Iniciando Geração TPC-H Bronze
+2025-09-30 12:36:04 | lhbench | INFO | ✅ Conexão DuckDB estabelecida
+2025-09-30 12:36:04 | lhbench | INFO | ✅ Conexão DuckDB estabelecida
+2025-09-30 12:36:06 | lhbench | INFO | ✅ Extensão TPC-H carregada
+2025-09-30 12:36:06 | lhbench | INFO | ✅ Extensão TPC-H carregada
+2025-09-30 12:36:08 | lhbench | INFO | ✅ Configuração S3/MinIO definida
+2025-09-30 12:36:08 | lhbench | INFO | ✅ Configuração S3/MinIO definida
+2025-09-30 12:36:08 | lhbench | INFO | 🔄 Gerando dados TPC-H Scale Factor 1...
+2025-09-30 12:36:08 | lhbench | INFO | 🔄 Gerando dados TPC-H Scale Factor 1...
+2025-09-30 12:36:09 | lhbench | INFO | ✅ Dados TPC-H gerados na memória
+2025-09-30 12:36:09 | lhbench | INFO | ✅ Dados TPC-H gerados na memória
+2025-09-30 12:36:09 | lhbench | INFO | 📤 Exportando tabela customer...
+2025-09-30 12:36:09 | lhbench | INFO | 📤 Exportando tabela customer...
+2025-09-30 12:36:10 | lhbench | INFO |    ✅ customer: 150,000 linhas → s3://bronze/sf_1/parquet/customer/customer.parquet
+2025-09-30 12:36:10 | lhbench | INFO |    ✅ customer: 150,000 linhas → s3://bronze/sf_1/parquet/customer/customer.parquet
+2025-09-30 12:36:10 | lhbench | INFO | 📤 Exportando tabela lineitem...
+2025-09-30 12:36:10 | lhbench | INFO | 📤 Exportando tabela lineitem...
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ lineitem: 6,001,215 linhas → s3://bronze/sf_1/parquet/lineitem/lineitem.parquet
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ lineitem: 6,001,215 linhas → s3://bronze/sf_1/parquet/lineitem/lineitem.parquet
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela nation...
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela nation...
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ nation: 25 linhas → s3://bronze/sf_1/parquet/nation/nation.parquet
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ nation: 25 linhas → s3://bronze/sf_1/parquet/nation/nation.parquet
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela orders...
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela orders...
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ orders: 1,500,000 linhas → s3://bronze/sf_1/parquet/orders/orders.parquet
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ orders: 1,500,000 linhas → s3://bronze/sf_1/parquet/orders/orders.parquet
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela part...
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela part...
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ part: 200,000 linhas → s3://bronze/sf_1/parquet/part/part.parquet
+2025-09-30 12:36:11 | lhbench | INFO |    ✅ part: 200,000 linhas → s3://bronze/sf_1/parquet/part/part.parquet
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela partsupp...
+2025-09-30 12:36:11 | lhbench | INFO | 📤 Exportando tabela partsupp...
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 800,000 linhas → s3://bronze/sf_1/parquet/partsupp/partsupp.parquet
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 800,000 linhas → s3://bronze/sf_1/parquet/partsupp/partsupp.parquet
+2025-09-30 12:36:12 | lhbench | INFO | 📤 Exportando tabela region...
+2025-09-30 12:36:12 | lhbench | INFO | 📤 Exportando tabela region...
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 5 linhas → s3://bronze/sf_1/parquet/region/region.parquet
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 5 linhas → s3://bronze/sf_1/parquet/region/region.parquet
+2025-09-30 12:36:12 | lhbench | INFO | 📤 Exportando tabela supplier...
+2025-09-30 12:36:12 | lhbench | INFO | 📤 Exportando tabela supplier...
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 10,000 linhas → s3://bronze/sf_1/parquet/supplier/supplier.parquet
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 10,000 linhas → s3://bronze/sf_1/parquet/supplier/supplier.parquet
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Verificando dados gerados...
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Verificando dados gerados...
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resultados salvos: /app/results/bronze_generation_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resultados salvos: /app/results/bronze_generation_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Geração TPC-H Bronze concluído em 7.56s
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Geração TPC-H Bronze concluído em 7.56s
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥈 ETAPA 2: Conversão Bronze → Silver
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥈 ETAPA 2: Conversão Bronze → Silver
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO |                  CONVERSÃO BRONZE → SILVER (TODOS OS FORMATOS)                  
+2025-09-30 12:36:12 | lhbench | INFO |                  CONVERSÃO BRONZE → SILVER (TODOS OS FORMATOS)                  
+2025-09-30 12:36:12 | lhbench | INFO |                  CONVERSÃO BRONZE → SILVER (TODOS OS FORMATOS)                  
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver Completa
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver Completa
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver Completa
+2025-09-30 12:36:12 | lhbench | INFO | 
+🔄 Iniciando conversão para DELTA
+2025-09-30 12:36:12 | lhbench | INFO | 
+🔄 Iniciando conversão para DELTA
+2025-09-30 12:36:12 | lhbench | INFO | 
+🔄 Iniciando conversão para DELTA
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO |                        CONVERSÃO BRONZE → SILVER (DELTA)                        
+2025-09-30 12:36:12 | lhbench | INFO |                        CONVERSÃO BRONZE → SILVER (DELTA)                        
+2025-09-30 12:36:12 | lhbench | INFO |                        CONVERSÃO BRONZE → SILVER (DELTA)                        
+2025-09-30 12:36:12 | lhbench | INFO |                        CONVERSÃO BRONZE → SILVER (DELTA)                        
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Formato Source: parquet
+2025-09-30 12:36:12 | lhbench | INFO | Formato Source: parquet
+2025-09-30 12:36:12 | lhbench | INFO | Formato Source: parquet
+2025-09-30 12:36:12 | lhbench | INFO | Formato Source: parquet
+2025-09-30 12:36:12 | lhbench | INFO | Formato Target: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formato Target: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formato Target: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formato Target: delta
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | Force Recreate: False
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados bronze - Scale Factor 1
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ customer: 1 arquivos, 11.81 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ lineitem: 1 arquivos, 197.53 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ nation: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ orders: 1 arquivos, 53.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ part: 1 arquivos, 6.07 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ partsupp: 1 arquivos, 40.67 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ region: 1 arquivos, 0.00 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO |    ✅ supplier: 1 arquivos, 0.76 MB
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver delta
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver delta
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver delta
+2025-09-30 12:36:12 | lhbench | INFO | 🚀 Iniciando Conversão Silver delta
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão Silver delta falhou após 0.23s: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão Silver delta falhou após 0.23s: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão Silver delta falhou após 0.23s: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão Silver delta falhou após 0.23s: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Erro na conversão delta: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Erro na conversão delta: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Erro na conversão delta: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Erro na conversão delta: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão delta falhou
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão delta falhou
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão delta falhou
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Conversão delta falhou
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resumo salvo: /app/results/silver_conversion_all_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resumo salvo: /app/results/silver_conversion_all_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resumo salvo: /app/results/silver_conversion_all_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | 📊 Resumo salvo: /app/results/silver_conversion_all_20250930_123612_20250930_123612.json
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Conversão Silver Completa concluído em 0.33s
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Conversão Silver Completa concluído em 0.33s
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Conversão Silver Completa concluído em 0.33s
+2025-09-30 12:36:12 | lhbench | INFO | ✅ Conversão Silver Completa concluído em 0.33s
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥇 ETAPA 3: Benchmark TPC-H Gold
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥇 ETAPA 3: Benchmark TPC-H Gold
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥇 ETAPA 3: Benchmark TPC-H Gold
+2025-09-30 12:36:12 | lhbench | INFO | 
+🥇 ETAPA 3: Benchmark TPC-H Gold
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO |                             BENCHMARK TPC-H COMPLETO                            
+2025-09-30 12:36:12 | lhbench | INFO |                             BENCHMARK TPC-H COMPLETO                            
+2025-09-30 12:36:12 | lhbench | INFO |                             BENCHMARK TPC-H COMPLETO                            
+2025-09-30 12:36:12 | lhbench | INFO |                             BENCHMARK TPC-H COMPLETO                            
+2025-09-30 12:36:12 | lhbench | INFO |                             BENCHMARK TPC-H COMPLETO                            
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Scale Factor: 1
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Formatos: delta
+2025-09-30 12:36:12 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:12 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:12 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:12 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:12 | lhbench | INFO | Iterações: 1
+2025-09-30 12:36:12 | lhbench | INFO | Timeout: 30 min
+2025-09-30 12:36:12 | lhbench | INFO | Timeout: 30 min
+2025-09-30 12:36:12 | lhbench | INFO | Timeout: 30 min
+2025-09-30 12:36:12 | lhbench | INFO | Timeout: 30 min
+2025-09-30 12:36:12 | lhbench | INFO | Timeout: 30 min
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | ================================================================================
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 🔍 Validando dados silver - Scale Factor 1, Formatos: ['delta']
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | INFO | 📋 Validando formato DELTA...
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ customer: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ lineitem: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ nation: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ orders: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ part: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ partsupp: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ region: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ supplier: não encontrado
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | WARNING |    ❌ delta: 0/8 tabelas - INSUFICIENTE
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Dados silver insuficientes para benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Dados silver insuficientes para benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Dados silver insuficientes para benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Dados silver insuficientes para benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Dados silver insuficientes para benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Falha na etapa Benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Falha na etapa Benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Falha na etapa Benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Falha na etapa Benchmark
+2025-09-30 12:36:12 | lhbench | ERROR | ❌ Falha na etapa Benchmark

@@ -53,44 +53,44 @@ run_benchmark() {
     local cmd="python -m standalone.main --scale-factor $scale_factor --formats $formats --iterations $iterations $extra_args"
     
     echo -e "${GREEN}🔧 Iniciando serviços...${NC}"
-    docker compose -f docker-compose.standalone.yml up -d minio minio-client
+    docker compose -f docker-compose.yml up -d minio minio-client
     
     echo -e "${GREEN}⏳ Aguardando MinIO...${NC}"
     sleep 10
     
     echo -e "${GREEN}🏃 Executando LHBench...${NC}"
-    docker compose -f docker-compose.standalone.yml run --rm lhbench $cmd
+    docker compose -f docker-compose.yml run --rm lhbench $cmd
 }
 
 # Função para mostrar logs
 show_logs() {
     echo -e "${BLUE}📋 Mostrando logs do MinIO...${NC}"
-    docker compose -f docker-compose.standalone.yml logs minio
+    docker compose -f docker-compose.yml logs minio
 }
 
 # Função para limpar
 cleanup() {
     echo -e "${YELLOW}🧹 Parando e removendo containers...${NC}"
-    docker compose -f docker-compose.standalone.yml down -v
+    docker compose -f docker-compose.yml down -v
     echo -e "${GREEN}✅ Limpeza concluída${NC}"
 }
 
 # Função para acessar container
 shell() {
     echo -e "${BLUE}🐚 Acessando shell do container LHBench...${NC}"
-    docker compose -f docker-compose.standalone.yml run --rm lhbench bash
+    docker compose -f docker-compose.yml run --rm lhbench bash
 }
 
 # Função para build
 build() {
     echo -e "${BLUE}🔨 Construindo imagem LHBench...${NC}"
-    docker compose -f docker-compose.standalone.yml build lhbench
+    docker compose -f docker-compose.yml build lhbench
 }
 
 # Função para mostrar status
 status() {
     echo -e "${BLUE}📊 Status dos serviços:${NC}"
-    docker compose -f docker-compose.standalone.yml ps
+    docker compose -f docker-compose.yml ps
     echo ""
     echo -e "${BLUE}💾 Volumes:${NC}"
     docker volume ls | grep lhbench || echo "Nenhum volume encontrado"

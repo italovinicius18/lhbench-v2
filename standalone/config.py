@@ -125,4 +125,13 @@ class LHBenchConfig:
         }
 
 # Instância global de configuração
-config = LHBenchConfig.from_env()
+def get_default_config():
+    """Retorna configuração padrão"""
+    try:
+        return LHBenchConfig.from_env()
+    except Exception:
+        # Fallback para configuração padrão se houver erro
+        return LHBenchConfig()
+
+# Instância global de configuração
+config = get_default_config()

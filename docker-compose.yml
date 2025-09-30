@@ -44,7 +44,7 @@ services:
   lhbench:
     build:
       context: .
-      dockerfile: Dockerfile.standalone
+      dockerfile: Dockerfile
     container_name: lhbench_app
     depends_on:
       minio:

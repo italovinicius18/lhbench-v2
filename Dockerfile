@@ -1,20 +1,43 @@
-FROM astrocrpublic.azurecr.io/runtime:3.0-4
+# Dockerfile para LHBench Standalone
+FROM python:3.10-slim
 
-USER root
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    openjdk-21-jdk \
+    curl \
+    wget \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-# Atualiza repositórios e instala distutils + OpenJDK17 + ant
-RUN apt-get update && \
-    apt-get install -y \
-      python3-distutils \
-      openjdk-17-jdk \
-      ant \ 
-      wget && \
-    rm -rf /var/lib/apt/lists/*
+# Configurar Java
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
 
-RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/local/bin/mc && \
-    chmod +x /usr/local/bin/mc
+# Definir diretório de trabalho
+WORKDIR /app
 
-# Define JAVA_HOME
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+# Copiar requirements e instalar dependências Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-USER astro
+# Copiar código fonte
+COPY standalone/ ./standalone/
+COPY README.md .
+
+# Criar diretórios necessários
+RUN mkdir -p /app/results /app/logs
+
+# Configurar variáveis de ambiente padrão
+ENV PYTHONPATH=/app
+ENV SPARK_HOME=/usr/local/lib/python3.10/site-packages/pyspark
+ENV PYSPARK_PYTHON=python3
+ENV PYSPARK_DRIVER_PYTHON=python3
+
+# Verificar instalação
+RUN python -c "import pyspark; print('PySpark OK')" && \
+    python -c "import duckdb; print('DuckDB OK')" && \
+    java -version
+
+# Comando padrão
+CMD ["python", "-m", "standalone.main", "--help"]

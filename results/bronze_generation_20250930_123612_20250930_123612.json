@@ -1,0 +1,159 @@
+{
+  "execution_id": "20250930_123612",
+  "stage": "bronze_generation",
+  "scale_factor": 1,
+  "timestamp": "20250930_123612",
+  "datetime": "2025-09-30T12:36:12.359151",
+  "config": {
+    "scale_factor": 1,
+    "benchmark_formats": [
+      "delta",
+      "iceberg",
+      "hudi"
+    ],
+    "benchmark_iterations": 1,
+    "input_format": "parquet"
+  },
+  "data": {
+    "status": "success",
+    "scale_factor": 1,
+    "input_format": "parquet",
+    "tables_generated": 8,
+    "s3_base_path": "sf_1/parquet",
+    "generation_results": [
+      {
+        "table": "customer",
+        "s3_url": "s3://bronze/sf_1/parquet/customer/customer.parquet",
+        "row_count": 150000
+      },
+      {
+        "table": "lineitem",
+        "s3_url": "s3://bronze/sf_1/parquet/lineitem/lineitem.parquet",
+        "row_count": 6001215
+      },
+      {
+        "table": "nation",
+        "s3_url": "s3://bronze/sf_1/parquet/nation/nation.parquet",
+        "row_count": 25
+      },
+      {
+        "table": "orders",
+        "s3_url": "s3://bronze/sf_1/parquet/orders/orders.parquet",
+        "row_count": 1500000
+      },
+      {
+        "table": "part",
+        "s3_url": "s3://bronze/sf_1/parquet/part/part.parquet",
+        "row_count": 200000
+      },
+      {
+        "table": "partsupp",
+        "s3_url": "s3://bronze/sf_1/parquet/partsupp/partsupp.parquet",
+        "row_count": 800000
+      },
+      {
+        "table": "region",
+        "s3_url": "s3://bronze/sf_1/parquet/region/region.parquet",
+        "row_count": 5
+      },
+      {
+        "table": "supplier",
+        "s3_url": "s3://bronze/sf_1/parquet/supplier/supplier.parquet",
+        "row_count": 10000
+      }
+    ],
+    "validation": {
+      "validation_status": "success",
+      "bronze_path": "sf_1/parquet",
+      "scale_factor": 1,
+      "input_format": "parquet",
+      "found_tables": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier"
+      ],
+      "missing_tables": [],
+      "validation_results": {
+        "customer": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 11.814547538757324,
+          "path": "s3a://bronze/sf_1/parquet/customer/",
+          "files": [
+            "sf_1/parquet/customer/customer.parquet"
+          ]
+        },
+        "lineitem": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 197.53452682495117,
+          "path": "s3a://bronze/sf_1/parquet/lineitem/",
+          "files": [
+            "sf_1/parquet/lineitem/lineitem.parquet"
+          ]
+        },
+        "nation": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 0.0021905899047851562,
+          "path": "s3a://bronze/sf_1/parquet/nation/",
+          "files": [
+            "sf_1/parquet/nation/nation.parquet"
+          ]
+        },
+        "orders": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 53.7633638381958,
+          "path": "s3a://bronze/sf_1/parquet/orders/",
+          "files": [
+            "sf_1/parquet/orders/orders.parquet"
+          ]
+        },
+        "part": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 6.068696975708008,
+          "path": "s3a://bronze/sf_1/parquet/part/",
+          "files": [
+            "sf_1/parquet/part/part.parquet"
+          ]
+        },
+        "partsupp": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 40.66821575164795,
+          "path": "s3a://bronze/sf_1/parquet/partsupp/",
+          "files": [
+            "sf_1/parquet/partsupp/partsupp.parquet"
+          ]
+        },
+        "region": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 0.001010894775390625,
+          "path": "s3a://bronze/sf_1/parquet/region/",
+          "files": [
+            "sf_1/parquet/region/region.parquet"
+          ]
+        },
+        "supplier": {
+          "exists": true,
+          "file_count": 1,
+          "total_size_mb": 0.7568559646606445,
+          "path": "s3a://bronze/sf_1/parquet/supplier/",
+          "files": [
+            "sf_1/parquet/supplier/supplier.parquet"
+          ]
+        }
+      },
+      "all_tables_found": true
+    },
+    "duration_seconds": 0.0
+  }
+}

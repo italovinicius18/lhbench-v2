@@ -8,11 +8,11 @@ import logging
 from datetime import datetime
 from typing import Dict, Any
 
-from .config import config
-from .utils import setup_logging, print_summary_banner
-from .bronze_generator import generate_bronze_data
-from .silver_converter import convert_all_silver_formats
-from .benchmark_executor import run_complete_benchmark
+from config import LHBenchConfig
+from utils import setup_logging, print_summary_banner
+from bronze_generator import generate_bronze_data
+from silver_converter import convert_all_silver_formats
+from benchmark_executor import run_complete_benchmark
 
 def run_full_pipeline(scale_factor: int = None, 
                      force_regenerate_bronze: bool = False,
