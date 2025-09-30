@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  # MinIO - S3 Compatible Storage
+  minio:
+    image: minio/minio:latest
+    container_name: lhbench_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # MinIO Client - Para criar buckets
+  minio-client:
+    image: minio/mc:latest
+    container_name: lhbench_minio_client
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set local http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb local/bronze --ignore-existing;
+      /usr/bin/mc mb local/silver --ignore-existing;
+      /usr/bin/mc mb local/gold --ignore-existing;
+      /usr/bin/mc anonymous set public local/bronze;
+      /usr/bin/mc anonymous set public local/silver;
+      /usr/bin/mc anonymous set public local/gold;
+      echo 'Buckets criados com sucesso';
+      exit 0;
+      "
+
+  # LHBench Application
+  lhbench:
+    build:
+      context: .
+      dockerfile: Dockerfile.standalone
+    container_name: lhbench_app
+    depends_on:
+      minio:
+        condition: service_healthy
+      minio-client:
+        condition: service_completed_successfully
+    environment:
+      # MinIO Configuration
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      BRONZE_BUCKET: bronze
+      SILVER_BUCKET: silver
+      GOLD_BUCKET: gold
+      
+      # TPC-H Configuration
+      SCALE_FACTOR: ${SCALE_FACTOR:-1}
+      INPUT_FORMAT: ${INPUT_FORMAT:-parquet}
+      BENCHMARK_FORMATS: ${BENCHMARK_FORMATS:-delta}
+      BENCHMARK_ITERATIONS: ${BENCHMARK_ITERATIONS:-1}
+      
+      # Spark Configuration
+      SPARK_EXECUTOR_MEMORY: ${SPARK_EXECUTOR_MEMORY:-2g}
+      SPARK_DRIVER_MEMORY: ${SPARK_DRIVER_MEMORY:-1g}
+      SPARK_EXECUTOR_CORES: ${SPARK_EXECUTOR_CORES:-2}
+      SPARK_EXECUTOR_INSTANCES: ${SPARK_EXECUTOR_INSTANCES:-1}
+      
+      # Other
+      RESULTS_PATH: /app/results
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      
+      # Java for Spark
+      JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+    volumes:
+      - ./results:/app/results
+      - ./logs:/app/logs
+    working_dir: /app
+    # Comando padrão - pode ser sobrescrito
+    command: ["python", "-m", "standalone.main", "--scale-factor", "1", "--formats", "delta", "--iterations", "1"]
+    
+  # Spark Master (opcional - para clusters maiores)
+  spark-master:
+    image: bitnami/spark:3.5
+    container_name: lhbench_spark_master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    profiles:
+      - spark-cluster
+
+  # Spark Worker (opcional - para clusters maiores)
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: lhbench_spark_worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4g
+      - SPARK_WORKER_CORES=2
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    depends_on:
+      - spark-master
+    profiles:
+      - spark-cluster
+
+volumes:
+  minio_data:
+    driver: local
+
+networks:
+  default:
+    name: lhbench_network
