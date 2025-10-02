@@ -1,8 +1,43 @@
-astro
-.git
-.env
-airflow_settings.yaml
-logs/
+# Git
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
 .venv
-airflow.db
-airflow.cfg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Results and logs
+results/
+*.log
+
+# Environment
+.env
+.env.local
+
+# Documentation
+docs/
+README.md
+PROJECT_SUMMARY.md
+
+# Tests
+tests/
+
+# OS
+.DS_Store
+Thumbs.db

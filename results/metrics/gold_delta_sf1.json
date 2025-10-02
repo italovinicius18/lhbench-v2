@@ -1,0 +1,214 @@
+{
+  "framework": "delta",
+  "scale_factor": 1,
+  "start_time": "2025-10-02T22:25:25.001047",
+  "queries": {
+    "q1": {
+      "query_id": "q1",
+      "query_name": "Pricing Summary Report",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 11.759,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q2": {
+      "query_id": "q2",
+      "query_name": "Minimum Cost Supplier",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 10.576,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q3": {
+      "query_id": "q3",
+      "query_name": "Shipping Priority",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.794,
+      "row_count": 10,
+      "sample_rows": 10
+    },
+    "q4": {
+      "query_id": "q4",
+      "query_name": "Order Priority Checking",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.981,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q5": {
+      "query_id": "q5",
+      "query_name": "Local Supplier Volume",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.701,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q6": {
+      "query_id": "q6",
+      "query_name": "Forecasting Revenue Change",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.157,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q7": {
+      "query_id": "q7",
+      "query_name": "Volume Shipping",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 8.949,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q8": {
+      "query_id": "q8",
+      "query_name": "National Market Share",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.867,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q9": {
+      "query_id": "q9",
+      "query_name": "Product Type Profit Measure",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 10.321,
+      "row_count": 175,
+      "sample_rows": 10
+    },
+    "q10": {
+      "query_id": "q10",
+      "query_name": "Returned Item Reporting",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.429,
+      "row_count": 20,
+      "sample_rows": 10
+    },
+    "q11": {
+      "query_id": "q11",
+      "query_name": "Important Stock Identification",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.496,
+      "row_count": 1048,
+      "sample_rows": 10
+    },
+    "q12": {
+      "query_id": "q12",
+      "query_name": "Shipping Modes and Order Priority",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.675,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q13": {
+      "query_id": "q13",
+      "query_name": "Customer Distribution",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.135,
+      "row_count": 42,
+      "sample_rows": 10
+    },
+    "q14": {
+      "query_id": "q14",
+      "query_name": "Promotion Effect",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.822,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q15": {
+      "query_id": "q15",
+      "query_name": "Top Supplier",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.158,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q16": {
+      "query_id": "q16",
+      "query_name": "Parts/Supplier Relationship",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.678,
+      "row_count": 18314,
+      "sample_rows": 10
+    },
+    "q17": {
+      "query_id": "q17",
+      "query_name": "Small-Quantity-Order Revenue",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.183,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q18": {
+      "query_id": "q18",
+      "query_name": "Large Volume Customer",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.247,
+      "row_count": 57,
+      "sample_rows": 10
+    },
+    "q19": {
+      "query_id": "q19",
+      "query_name": "Discounted Revenue",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.944,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q20": {
+      "query_id": "q20",
+      "query_name": "Potential Part Promotion",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.48,
+      "row_count": 186,
+      "sample_rows": 10
+    },
+    "q21": {
+      "query_id": "q21",
+      "query_name": "Suppliers Who Kept Orders Waiting",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 11.27,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q22": {
+      "query_id": "q22",
+      "query_name": "Global Sales Opportunity",
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.827,
+      "row_count": 7,
+      "sample_rows": 7
+    }
+  },
+  "end_time": "2025-10-02T22:28:10.598329",
+  "total_duration": 165.597282,
+  "summary": {
+    "total_queries": 22,
+    "successful_queries": 22,
+    "failed_queries": 0,
+    "total_query_time": 157.449,
+    "average_query_time": 7.157
+  }
+}

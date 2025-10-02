@@ -1,11 +1,94 @@
-.git
+# ============================================================================
+# ENVIRONMENT & CONFIGURATION
+# ============================================================================
 .env
-.DS_Store
+*.env.local
+
+# ============================================================================
+# PYTHON
+# ============================================================================
 __pycache__/
-astro
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
 .venv
-airflow-webserver.pid
-webserver_config.py
-airflow.cfg
-airflow.db
-include/gcp/service-account.json
+
+# ============================================================================
+# IDE & EDITORS
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+
+# Results and outputs (keep structure, ignore content)
+results/logs/*
+results/reports/*
+!results/metrics/.gitkeep
+!results/logs/.gitkeep
+!results/reports/.gitkeep
+*.log
+
+# State files
+state.json
+*.state
+
+# Orchestrator (deprecated)
+scripts/orchestrator/
+docker/Dockerfile.orchestrator
+
+# ============================================================================
+# DOCKER
+# ============================================================================
+.docker/
+*.pid
+
+# ============================================================================
+# SPARK
+# ============================================================================
+derby.log
+derby.db/
+metastore_db/
+spark-warehouse/
+*.crc
+
+# ============================================================================
+# JUPYTER
+# ============================================================================
+.ipynb_checkpoints
+
+# ============================================================================
+# OS
+# ============================================================================
+.DS_Store
+Thumbs.db

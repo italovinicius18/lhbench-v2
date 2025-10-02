@@ -1,0 +1,32 @@
+# Dockerfile for Spark Worker with Lakehouse frameworks
+FROM apache/spark:3.5.0-python3
+
+USER root
+
+# Install Python packages for lakehouse frameworks
+RUN pip install --no-cache-dir \
+    delta-spark==3.0.0 \
+    pyiceberg==0.6.1 \
+    python-dotenv==1.0.1 \
+    structlog==24.1.0 \
+    pandas==2.0.3 \
+    pyarrow==13.0.0
+
+# Download lakehouse JARs (same as master)
+RUN cd /opt/spark/jars && \
+    # Delta Lake
+    curl -O https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.0.0/delta-spark_2.12-3.0.0.jar && \
+    curl -O https://repo1.maven.org/maven2/io/delta/delta-storage/3.0.0/delta-storage-3.0.0.jar && \
+    # Iceberg
+    curl -O https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.4.3/iceberg-spark-runtime-3.5_2.12-1.4.3.jar && \
+    # Hudi
+    curl -O https://repo1.maven.org/maven2/org/apache/hudi/hudi-spark3.5-bundle_2.12/0.14.1/hudi-spark3.5-bundle_2.12-0.14.1.jar
+
+# Create directories
+RUN mkdir -p /data /opt/spark/jobs
+
+WORKDIR /opt/spark
+
+EXPOSE 8081
+
+CMD ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077"]
