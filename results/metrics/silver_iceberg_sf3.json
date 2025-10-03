@@ -1,0 +1,65 @@
+{
+  "framework": "iceberg",
+  "scale_factor": 3,
+  "start_time": "2025-10-02T23:16:08.192429",
+  "tables": {
+    "customer": {
+      "status": "success",
+      "row_count": 450000,
+      "duration_seconds": 9.757424,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.customer"
+    },
+    "orders": {
+      "status": "success",
+      "row_count": 4500000,
+      "duration_seconds": 9.987741,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.orders"
+    },
+    "lineitem": {
+      "status": "success",
+      "row_count": 17996609,
+      "duration_seconds": 20.341436,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.lineitem"
+    },
+    "supplier": {
+      "status": "success",
+      "row_count": 30000,
+      "duration_seconds": 2.270494,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.supplier"
+    },
+    "part": {
+      "status": "success",
+      "row_count": 600000,
+      "duration_seconds": 2.680574,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.part"
+    },
+    "partsupp": {
+      "status": "success",
+      "row_count": 2400000,
+      "duration_seconds": 4.447899,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.partsupp"
+    },
+    "nation": {
+      "status": "success",
+      "row_count": 25,
+      "duration_seconds": 2.06564,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.nation"
+    },
+    "region": {
+      "status": "success",
+      "row_count": 5,
+      "duration_seconds": 2.08323,
+      "size_mb": 0.0,
+      "table_location": "iceberg.tpch.region"
+    }
+  },
+  "end_time": "2025-10-02T23:17:02.545192",
+  "total_duration": 54.352763
+}

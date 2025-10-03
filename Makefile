@@ -89,6 +89,8 @@ benchmark-silver: ## Run Silver phase only (all frameworks). Usage: make benchma
 	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/delta/convert_tables.py"
 	@echo '$(BLUE)Converting to Iceberg...$(RESET)'
 	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/iceberg/convert_tables.py"
+	@echo '$(BLUE)Converting to Hudi...$(RESET)'
+	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/hudi/convert_tables.py"
 	@echo '$(GREEN)✅ Silver phase complete!$(RESET)'
 
 benchmark-gold: ## Run Gold phase only (queries). Usage: make benchmark-gold SF=1
@@ -97,6 +99,8 @@ benchmark-gold: ## Run Gold phase only (queries). Usage: make benchmark-gold SF=
 	docker compose exec spark-master bash -c "FRAMEWORK=delta TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
 	@echo '$(BLUE)Executing Iceberg queries...$(RESET)'
 	docker compose exec spark-master bash -c "FRAMEWORK=iceberg TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
+	@echo '$(BLUE)Executing Hudi queries...$(RESET)'
+	docker compose exec spark-master bash -c "FRAMEWORK=hudi TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
 	@echo '$(GREEN)✅ Gold phase complete!$(RESET)'
 
 # ============================================================================

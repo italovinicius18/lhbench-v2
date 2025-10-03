@@ -1,0 +1,214 @@
+{
+  "framework": "hudi",
+  "scale_factor": 3,
+  "start_time": "2025-10-02T23:27:37.411336",
+  "queries": {
+    "q1": {
+      "query_id": "q1",
+      "query_name": "Pricing Summary Report",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 18.104,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q2": {
+      "query_id": "q2",
+      "query_name": "Minimum Cost Supplier",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 15.544,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q3": {
+      "query_id": "q3",
+      "query_name": "Shipping Priority",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 10.982,
+      "row_count": 10,
+      "sample_rows": 10
+    },
+    "q4": {
+      "query_id": "q4",
+      "query_name": "Order Priority Checking",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 6.302,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q5": {
+      "query_id": "q5",
+      "query_name": "Local Supplier Volume",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 9.866,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q6": {
+      "query_id": "q6",
+      "query_name": "Forecasting Revenue Change",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 4.096,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q7": {
+      "query_id": "q7",
+      "query_name": "Volume Shipping",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 10.326,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q8": {
+      "query_id": "q8",
+      "query_name": "National Market Share",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 8.367,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q9": {
+      "query_id": "q9",
+      "query_name": "Product Type Profit Measure",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 10.003,
+      "row_count": 175,
+      "sample_rows": 10
+    },
+    "q10": {
+      "query_id": "q10",
+      "query_name": "Returned Item Reporting",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 7.713,
+      "row_count": 20,
+      "sample_rows": 10
+    },
+    "q11": {
+      "query_id": "q11",
+      "query_name": "Important Stock Identification",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 3.734,
+      "row_count": 0,
+      "sample_rows": 0
+    },
+    "q12": {
+      "query_id": "q12",
+      "query_name": "Shipping Modes and Order Priority",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 6.689,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q13": {
+      "query_id": "q13",
+      "query_name": "Customer Distribution",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 4.946,
+      "row_count": 43,
+      "sample_rows": 10
+    },
+    "q14": {
+      "query_id": "q14",
+      "query_name": "Promotion Effect",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 6.089,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q15": {
+      "query_id": "q15",
+      "query_name": "Top Supplier",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 9.615,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q16": {
+      "query_id": "q16",
+      "query_name": "Parts/Supplier Relationship",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 3.354,
+      "row_count": 26798,
+      "sample_rows": 10
+    },
+    "q17": {
+      "query_id": "q17",
+      "query_name": "Small-Quantity-Order Revenue",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 10.314,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q18": {
+      "query_id": "q18",
+      "query_name": "Large Volume Customer",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 14.09,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q19": {
+      "query_id": "q19",
+      "query_name": "Discounted Revenue",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 5.657,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q20": {
+      "query_id": "q20",
+      "query_name": "Potential Part Promotion",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 6.584,
+      "row_count": 556,
+      "sample_rows": 10
+    },
+    "q21": {
+      "query_id": "q21",
+      "query_name": "Suppliers Who Kept Orders Waiting",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 16.591,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q22": {
+      "query_id": "q22",
+      "query_name": "Global Sales Opportunity",
+      "framework": "hudi",
+      "status": "success",
+      "duration_seconds": 6.103,
+      "row_count": 7,
+      "sample_rows": 7
+    }
+  },
+  "end_time": "2025-10-02T23:31:09.088432",
+  "total_duration": 211.677096,
+  "summary": {
+    "total_queries": 22,
+    "successful_queries": 22,
+    "failed_queries": 0,
+    "total_query_time": 195.069,
+    "average_query_time": 8.867
+  }
+}

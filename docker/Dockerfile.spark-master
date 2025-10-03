@@ -15,12 +15,15 @@ RUN pip install --no-cache-dir \
 # Download lakehouse JARs
 RUN cd /opt/spark/jars && \
     # Delta Lake
-    curl -O https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.0.0/delta-spark_2.12-3.0.0.jar && \
-    curl -O https://repo1.maven.org/maven2/io/delta/delta-storage/3.0.0/delta-storage-3.0.0.jar && \
+    curl -L -O https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.0.0/delta-spark_2.12-3.0.0.jar && \
+    curl -L -O https://repo1.maven.org/maven2/io/delta/delta-storage/3.0.0/delta-storage-3.0.0.jar && \
     # Iceberg
-    curl -O https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.4.3/iceberg-spark-runtime-3.5_2.12-1.4.3.jar && \
+    curl -L -O https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.4.3/iceberg-spark-runtime-3.5_2.12-1.4.3.jar && \
     # Hudi
-    curl -O https://repo1.maven.org/maven2/org/apache/hudi/hudi-spark3.5-bundle_2.12/0.14.1/hudi-spark3.5-bundle_2.12-0.14.1.jar
+    curl -L -O https://repo1.maven.org/maven2/org/apache/hudi/hudi-spark3.5-bundle_2.12/1.0.2/hudi-spark3.5-bundle_2.12-1.0.2.jar && \
+    # Verify JARs were downloaded correctly
+    ls -lh *.jar && \
+    echo "✅ All JARs downloaded successfully"
 
 # Create directories
 RUN mkdir -p /data /opt/spark/jobs /opt/spark/configs

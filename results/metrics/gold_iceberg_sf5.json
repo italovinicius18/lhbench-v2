@@ -1,0 +1,214 @@
+{
+  "framework": "iceberg",
+  "scale_factor": 5,
+  "start_time": "2025-10-02T23:51:53.299731",
+  "queries": {
+    "q1": {
+      "query_id": "q1",
+      "query_name": "Pricing Summary Report",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 18.243,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q2": {
+      "query_id": "q2",
+      "query_name": "Minimum Cost Supplier",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 8.417,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q3": {
+      "query_id": "q3",
+      "query_name": "Shipping Priority",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 10.591,
+      "row_count": 10,
+      "sample_rows": 10
+    },
+    "q4": {
+      "query_id": "q4",
+      "query_name": "Order Priority Checking",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 20.45,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q5": {
+      "query_id": "q5",
+      "query_name": "Local Supplier Volume",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 14.45,
+      "row_count": 5,
+      "sample_rows": 5
+    },
+    "q6": {
+      "query_id": "q6",
+      "query_name": "Forecasting Revenue Change",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 3.392,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q7": {
+      "query_id": "q7",
+      "query_name": "Volume Shipping",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 14.04,
+      "row_count": 4,
+      "sample_rows": 4
+    },
+    "q8": {
+      "query_id": "q8",
+      "query_name": "National Market Share",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 15.049,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q9": {
+      "query_id": "q9",
+      "query_name": "Product Type Profit Measure",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 18.741,
+      "row_count": 175,
+      "sample_rows": 10
+    },
+    "q10": {
+      "query_id": "q10",
+      "query_name": "Returned Item Reporting",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 8.668,
+      "row_count": 20,
+      "sample_rows": 10
+    },
+    "q11": {
+      "query_id": "q11",
+      "query_name": "Important Stock Identification",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 4.104,
+      "row_count": 0,
+      "sample_rows": 0
+    },
+    "q12": {
+      "query_id": "q12",
+      "query_name": "Shipping Modes and Order Priority",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 5.573,
+      "row_count": 2,
+      "sample_rows": 2
+    },
+    "q13": {
+      "query_id": "q13",
+      "query_name": "Customer Distribution",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 9.48,
+      "row_count": 42,
+      "sample_rows": 10
+    },
+    "q14": {
+      "query_id": "q14",
+      "query_name": "Promotion Effect",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 5.592,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q15": {
+      "query_id": "q15",
+      "query_name": "Top Supplier",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 10.871,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q16": {
+      "query_id": "q16",
+      "query_name": "Parts/Supplier Relationship",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 4.336,
+      "row_count": 27724,
+      "sample_rows": 10
+    },
+    "q17": {
+      "query_id": "q17",
+      "query_name": "Small-Quantity-Order Revenue",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 18.908,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q18": {
+      "query_id": "q18",
+      "query_name": "Large Volume Customer",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 19.609,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q19": {
+      "query_id": "q19",
+      "query_name": "Discounted Revenue",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 5.659,
+      "row_count": 1,
+      "sample_rows": 1
+    },
+    "q20": {
+      "query_id": "q20",
+      "query_name": "Potential Part Promotion",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 7.744,
+      "row_count": 901,
+      "sample_rows": 10
+    },
+    "q21": {
+      "query_id": "q21",
+      "query_name": "Suppliers Who Kept Orders Waiting",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 43.798,
+      "row_count": 100,
+      "sample_rows": 10
+    },
+    "q22": {
+      "query_id": "q22",
+      "query_name": "Global Sales Opportunity",
+      "framework": "iceberg",
+      "status": "success",
+      "duration_seconds": 8.618,
+      "row_count": 7,
+      "sample_rows": 7
+    }
+  },
+  "end_time": "2025-10-02T23:56:32.117925",
+  "total_duration": 278.818194,
+  "summary": {
+    "total_queries": 22,
+    "successful_queries": 22,
+    "failed_queries": 0,
+    "total_query_time": 276.333,
+    "average_query_time": 12.561
+  }
+}

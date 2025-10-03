@@ -1,0 +1,73 @@
+{
+  "framework": "hudi",
+  "scale_factor": 5,
+  "start_time": "2025-10-02T23:41:26.719017",
+  "tables": {
+    "customer": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 35.149641,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/customer",
+      "primary_key": "c_custkey"
+    },
+    "orders": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 40.240964,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/orders",
+      "primary_key": "o_orderkey"
+    },
+    "lineitem": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 104.765152,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/lineitem",
+      "primary_key": "l_orderkey,l_linenumber"
+    },
+    "supplier": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 22.39457,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/supplier",
+      "primary_key": "s_suppkey"
+    },
+    "part": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 23.244569,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/part",
+      "primary_key": "p_partkey"
+    },
+    "partsupp": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 37.602043,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/partsupp",
+      "primary_key": "ps_partkey,ps_suppkey"
+    },
+    "nation": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 24.437991,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/nation",
+      "primary_key": "n_nationkey"
+    },
+    "region": {
+      "status": "success",
+      "row_count": 0,
+      "duration_seconds": 22.522335,
+      "size_mb": 0.0,
+      "table_location": "/data/silver/hudi/sf5/region",
+      "primary_key": "r_regionkey"
+    }
+  },
+  "end_time": "2025-10-02T23:46:39.261394",
+  "total_duration": 312.542377
+}
