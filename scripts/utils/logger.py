@@ -1,17 +1,17 @@
 """Structured logging setup for benchmark."""
 
+import os
 import sys
 import logging
 from pathlib import Path
 from typing import Optional
 import structlog
-from .config_loader import get_config
 
 
 def setup_logger(name: str = "benchmark", log_file: Optional[Path] = None) -> structlog.BoundLogger:
     """Setup structured logger with console and file outputs."""
 
-    log_level = get_config('LOG_LEVEL', 'INFO')
+    log_level = os.getenv('LOG_LEVEL', 'INFO')
 
     # Configure standard logging
     logging.basicConfig(
@@ -30,7 +30,7 @@ def setup_logger(name: str = "benchmark", log_file: Optional[Path] = None) -> st
     ]
 
     # Add JSON or console renderer
-    log_format = get_config('LOG_FORMAT', 'json')
+    log_format = os.getenv('LOG_FORMAT', 'json')
     if log_format == 'json':
         processors.append(structlog.processors.JSONRenderer())
     else:
@@ -49,8 +49,9 @@ def setup_logger(name: str = "benchmark", log_file: Optional[Path] = None) -> st
     logger = structlog.get_logger(name)
 
     # Add file handler if requested
-    if log_file or get_config('LOG_TO_FILE', False):
-        file_path = log_file or Path(get_config('LOG_FILE_PATH', 'results/logs')) / f"{name}.log"
+    log_to_file = os.getenv('LOG_TO_FILE', 'false').lower() == 'true'
+    if log_file or log_to_file:
+        file_path = log_file or Path(os.getenv('LOG_FILE_PATH', 'results/logs')) / f"{name}.log"
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
         file_handler = logging.FileHandler(file_path)

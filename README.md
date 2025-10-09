@@ -1,335 +1,152 @@
-# Lakehouse Benchmark
+# TPC-DS Lakehouse Benchmark
 
-High-performance benchmark system comparing **Apache Iceberg**, **Delta Lake**, and **Apache Hudi** using TPC-H data.
+Automated benchmark comparing Apache Spark with three lakehouse formats: **Delta Lake**, **Apache Iceberg**, and **Apache Hudi** using the TPC-DS benchmark (99 queries, 24 tables).
 
-## 🎯 Features
-
-- **Simple Architecture**: Docker Compose orchestration (no Airflow complexity)
-- **High-Performance Data Generation**: Using [tpchgen-cli](https://github.com/clflushopt/tpchgen-rs) (10x faster than alternatives)
-- **Configurable via .env**: All settings in one centralized configuration file
-- **Idempotent Execution**: Smart caching prevents unnecessary regeneration
-- **Medallion Architecture**: Bronze → Silver → Gold data flow
-- **Comprehensive Metrics**: JSON-based performance tracking
-- **Local Storage**: Direct filesystem access (no S3/MinIO overhead)
-
-## 📋 Prerequisites
-
-- **Docker** & **Docker Compose** installed
-- **WSL2** (Windows) or native Linux/macOS
-- **Minimum 16GB RAM** recommended
-- **Disk Space**:
-  - SF1: ~3.6GB
-  - SF10: ~36GB
-  - SF100: ~360GB
-
-## 🚀 Quick Start
-
-### 1. Setup Environment
+## Quick Start
 
 ```bash
-# Clone repository
-git clone <repository-url>
-cd lhbench-v2
+# Run complete benchmark with one command
+make
 
-# Create configuration
-make setup
-
-# Edit .env with your settings
-nano .env
+# Or run with custom scale factor
+make SF=10
 ```
 
-### 2. Configure Benchmark
+That's it! The Makefile will automatically:
+1. Setup environment and directories
+2. Build Docker images
+3. Start Spark cluster
+4. Generate TPC-DS data
+5. Convert to all lakehouse formats
+6. Run all 99 queries on each format
+7. Copy results to `results/metrics/`
 
-Edit `.env` file:
+## Requirements
+
+- Docker & Docker Compose
+- 16GB+ RAM recommended
+- 50GB+ disk space
+
+## Configuration
+
+Edit `.env` to customize:
 
 ```bash
-# Scale Factor (1=1GB, 10=10GB, 100=100GB)
-TPCH_SCALE_FACTOR=10
+# Scale factor (1=3GB, 10=30GB, 100=300GB)
+TPCDS_SCALE_FACTOR=1
 
-# Frameworks to test
-FRAMEWORKS=iceberg,delta,hudi
+# Query tier (tier1, tier2, tier3, lhbench, all)
+TPCDS_QUERY_TIER=all
 
 # Spark cluster resources
-SPARK_WORKER_CORES=2
-SPARK_WORKER_MEMORY=4g
+SPARK_WORKER_CORES=5
+SPARK_WORKER_MEMORY=3g
 ```
 
-### 3. Build & Start
+## Available Commands
 
 ```bash
-# Build Docker images
-make build
+make              # Run complete automated benchmark
+make help         # Show all available commands
 
-# Start Spark cluster
-make up
+# Individual phases
+make bronze       # Generate TPC-DS data
+make silver       # Convert to lakehouse formats
+make gold         # Run queries
 
-# Verify services are running
-make status
+# Query tiers
+make tier1        # Run 10 essential queries
+make tier2        # Run 15 advanced queries
+make tier3        # Run 10 stress queries
+make lhbench      # Run 5 refresh test queries
+
+# Utilities
+make status       # Show cluster status
+make logs         # Show logs
+make results      # Copy results from container
+make ui           # Open Spark UI (http://localhost:8080)
+make shell        # Open shell in Spark master
+
+# Cleanup
+make clean        # Stop services
+make clean-all    # Complete cleanup (data + containers)
 ```
 
-### 4. Run Benchmark
-
-```bash
-# Run complete benchmark (all phases)
-make benchmark
-
-# Or run phases individually:
-make benchmark-bronze  # Generate TPC-H data
-make benchmark-silver  # Convert to frameworks
-make benchmark-gold    # Run queries
-```
-
-## 📊 Architecture
-
-### Data Flow
+## Project Structure
 
 ```
-Bronze (Parquet)
-    ↓
-Silver (Iceberg, Delta, Hudi)
-    ↓
-Gold (Metrics & Reports)
+lhbench-v2/
+├── Makefile                    # One-command automation
+├── docker-compose.yml          # Spark cluster (1 master + 2 workers)
+├── .env.example               # Configuration template
+├── configs/
+│   └── queries/tpcds/         # 99 TPC-DS queries (DuckDB format)
+├── spark_jobs/
+│   ├── bronze/                # Data generation
+│   ├── silver/                # Format conversion (Delta/Iceberg/Hudi)
+│   └── gold/                  # Query execution
+└── results/metrics/           # Benchmark results (JSON)
 ```
 
-### Directory Structure
+## Benchmark Phases
 
-```
-/mnt/c/Users/italo/WSL_DATA/lakehouse-data/
-├── bronze/
-│   └── tpch/
-│       ├── _metadata/          # Generation metadata & state
-│       ├── sf1/                # Scale Factor 1 (1GB)
-│       ├── sf10/               # Scale Factor 10 (10GB)
-│       └── sf100/              # Scale Factor 100 (100GB)
-├── silver/
-│   ├── iceberg/                # Iceberg tables
-│   ├── delta/                  # Delta Lake tables
-│   └── hudi/                   # Hudi tables
-└── gold/
-    ├── metrics/                # Performance metrics
-    ├── reports/                # Comparative reports
-    └── logs/                   # Execution logs
-```
+### Phase 1: Bronze (Data Generation)
+Generates TPC-DS data using DuckDB at specified scale factor:
+- 24 tables (7 fact + 17 dimension)
+- Parquet format with Snappy compression
 
-## 🛠️ Commands Reference
+### Phase 2: Silver (Lakehouse Conversion)
+Converts bronze Parquet to lakehouse formats:
+- **Delta Lake 3.0.0** - ACID transactions, time travel
+- **Apache Iceberg 1.4.3** - Hidden partitioning, schema evolution
+- **Apache Hudi 1.0.2** - Upserts, incremental processing
 
-### Essential Commands
+### Phase 3: Gold (Query Execution)
+Runs TPC-DS queries on each format and collects metrics:
+- Query execution time
+- Success/failure status
+- Total queries executed
+- Framework-specific performance
 
-```bash
-make help              # Show all commands
-make setup             # Initial setup
-make build             # Build Docker images
-make up                # Start services
-make down              # Stop services
-make benchmark         # Run full benchmark
-```
+## Results
 
-### Phase-Specific Commands
+Results are saved to `results/metrics/` in JSON format:
 
-```bash
-make benchmark-bronze  # Generate TPC-H data only
-make benchmark-silver  # Convert to frameworks only
-make benchmark-gold    # Run queries only
+```json
+{
+  "framework": "delta",
+  "scale_factor": 1,
+  "total_queries": 99,
+  "successful_queries": 99,
+  "total_duration_seconds": 447.34,
+  "average_query_time_seconds": 4.52,
+  "queries": { ... }
+}
 ```
 
-### Data Generation
+## Scale Factors
 
-```bash
-make generate-sf1      # Generate 1GB dataset
-make generate-sf10     # Generate 10GB dataset
-make generate-sf100    # Generate 100GB dataset
-```
+| SF | Data Size | Tables Size | Recommended RAM |
+|----|-----------|-------------|-----------------|
+| 1  | ~3 GB     | 24 tables   | 8 GB            |
+| 10 | ~30 GB    | 24 tables   | 16 GB           |
+| 100| ~300 GB   | 24 tables   | 32 GB+          |
 
-### Utilities
+## Query Tiers
 
-```bash
-make logs              # View all logs
-make status            # Show service status
-make spark-ui          # Open Spark UI (http://localhost:8080)
-make clean-cache       # Clean Spark cache
-make reset             # Reset benchmark state
-make clean             # Clean all data & containers
-```
+- **tier1**: 10 essential queries (Q1,Q3,Q7,Q11,Q19,Q25,Q42,Q52,Q55,Q98)
+- **tier2**: 15 advanced queries
+- **tier3**: 10 stress queries
+- **lhbench**: 5 refresh test queries (Q3,Q9,Q34,Q42,Q59)
+- **all**: All 99 queries
 
-## 📈 TPC-H Data Generation Performance
+## Architecture
 
-Using `tpchgen-cli` (Rust-based, high-performance):
+- **Spark 3.5.0** with Python 3.10
+- **1 Master + 2 Workers** (5 cores, 3GB each)
+- **DuckDB** for TPC-DS data generation
+- **Delta Lake 3.0.0**, **Iceberg 1.4.3**, **Hudi 1.0.2**
 
-| Scale Factor | Size | Generation Time* |
-|-------------|------|------------------|
-| SF1         | 3.6GB | ~2 seconds      |
-| SF10        | 36GB  | ~10 seconds     |
-| SF100       | 360GB | ~1.5 minutes    |
-| SF1000      | 3.6TB | ~10 minutes     |
+## License
 
-*On modern laptop (M3 Max or equivalent)
-
-## 🔧 Configuration Guide
-
-### Key Environment Variables
-
-#### Benchmark Settings
-```bash
-BENCHMARK_NAME=lakehouse-comparison
-TPCH_SCALE_FACTOR=10
-FRAMEWORKS=iceberg,delta,hudi
-FORCE_REGENERATE=false  # Skip regeneration if data exists
-```
-
-#### Spark Cluster
-```bash
-SPARK_WORKER_COUNT=2
-SPARK_WORKER_CORES=2
-SPARK_WORKER_MEMORY=4g
-SPARK_EXECUTOR_CORES=2
-SPARK_EXECUTOR_MEMORY=4g
-```
-
-#### Framework-Specific
-```bash
-# Iceberg
-ICEBERG_ENABLED=true
-ICEBERG_FILE_FORMAT=parquet
-ICEBERG_COMPRESSION=snappy
-
-# Delta Lake
-DELTA_ENABLED=true
-DELTA_AUTO_OPTIMIZE=true
-DELTA_AUTO_COMPACT=true
-
-# Hudi
-HUDI_ENABLED=true
-HUDI_TABLE_TYPE=COPY_ON_WRITE
-HUDI_CLUSTERING_ENABLED=true
-```
-
-## 📊 Monitoring
-
-### Spark Web UIs
-
-- **Spark Master**: http://localhost:8080
-- **Worker 1**: http://localhost:8081
-- **Worker 2**: http://localhost:8082
-
-### Logs
-
-```bash
-# All logs
-make logs
-
-# Orchestrator only
-make logs-orchestrator
-
-# Spark master
-docker-compose logs -f spark-master
-```
-
-### Metrics
-
-Metrics are saved to:
-- `results/metrics/` - Execution metrics (JSON)
-- `results/logs/` - Detailed logs
-- `/data/gold/metrics/` - Benchmark metrics
-
-## 🐛 Troubleshooting
-
-### Services won't start
-
-```bash
-# Check status
-make status
-
-# View logs
-make logs
-
-# Restart services
-make down && make up
-```
-
-### Out of memory
-
-```bash
-# Increase worker memory in .env
-SPARK_WORKER_MEMORY=8g
-SPARK_EXECUTOR_MEMORY=8g
-
-# Rebuild and restart
-make down && make up
-```
-
-### Data generation fails
-
-```bash
-# Check tpchgen container
-docker-compose --profile datagen run --rm tpchgen tpchgen-cli --version
-
-# Regenerate manually
-docker-compose --profile datagen run --rm tpchgen \
-  tpchgen-cli -s 10 --format=parquet --output-dir=/data/bronze/tpch/sf10
-```
-
-### Reset everything
-
-```bash
-# Reset state (keeps data)
-make reset
-
-# Clean all data
-make clean
-
-# Fresh start
-make setup && make build && make up
-```
-
-## 📚 Project Structure
-
-```
-lakehouse-benchmark/
-├── docker/                 # Dockerfiles
-│   ├── Dockerfile.tpchgen
-│   ├── Dockerfile.spark-master
-│   ├── Dockerfile.spark-worker
-│   └── Dockerfile.orchestrator
-├── scripts/                # Python orchestration scripts
-│   ├── phases/            # Benchmark phases
-│   ├── orchestrator/      # State & task management
-│   └── utils/             # Utilities
-├── spark_jobs/            # Spark jobs
-│   ├── bronze/            # Data generation
-│   ├── silver/            # Framework conversions
-│   ├── gold/              # Query execution
-│   └── common/            # Shared utilities
-├── configs/               # Configuration files
-├── tests/                 # Test suite
-├── docker-compose.yml     # Service orchestration
-├── .env.example           # Configuration template
-├── Makefile              # Command shortcuts
-└── README.md             # This file
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests: `make test`
-5. Submit a pull request
-
-## 📝 License
-
-[Your License]
-
-## 🙏 Acknowledgments
-
-- **tpchgen-cli**: High-performance TPC-H generator by [@clflushopt](https://github.com/clflushopt/tpchgen-rs)
-- **Apache Iceberg, Delta Lake, Apache Hudi**: Lakehouse frameworks
-- **Apache Spark**: Processing engine
-
-## 📧 Support
-
-- Issues: [GitHub Issues](your-repo-url/issues)
-- Discussions: [GitHub Discussions](your-repo-url/discussions)
-
----
-
-**Built with ❤️ for the lakehouse community**
+MIT

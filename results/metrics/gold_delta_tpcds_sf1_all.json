@@ -1,0 +1,812 @@
+{
+  "framework": "delta",
+  "benchmark": "tpcds",
+  "scale_factor": 1,
+  "tier": "all",
+  "start_time": "2025-10-08T14:55:43.145156",
+  "queries": {
+    "q01": {
+      "query_id": "q01",
+      "query_number": 1,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.67,
+      "row_count": 100
+    },
+    "q02": {
+      "query_id": "q02",
+      "query_number": 2,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.41,
+      "row_count": 2513
+    },
+    "q03": {
+      "query_id": "q03",
+      "query_number": 3,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.1,
+      "row_count": 89
+    },
+    "q04": {
+      "query_id": "q04",
+      "query_number": 4,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 11.26,
+      "row_count": 6
+    },
+    "q05": {
+      "query_id": "q05",
+      "query_number": 5,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.2,
+      "row_count": 100
+    },
+    "q06": {
+      "query_id": "q06",
+      "query_number": 6,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.96,
+      "row_count": 46
+    },
+    "q07": {
+      "query_id": "q07",
+      "query_number": 7,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.48,
+      "row_count": 100
+    },
+    "q08": {
+      "query_id": "q08",
+      "query_number": 8,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.55,
+      "row_count": 5
+    },
+    "q09": {
+      "query_id": "q09",
+      "query_number": 9,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 1.01,
+      "row_count": 1
+    },
+    "q10": {
+      "query_id": "q10",
+      "query_number": 10,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.66,
+      "row_count": 6
+    },
+    "q11": {
+      "query_id": "q11",
+      "query_number": 11,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.93,
+      "row_count": 90
+    },
+    "q12": {
+      "query_id": "q12",
+      "query_number": 12,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.11,
+      "row_count": 100
+    },
+    "q13": {
+      "query_id": "q13",
+      "query_number": 13,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.6,
+      "row_count": 1
+    },
+    "q14": {
+      "query_id": "q14",
+      "query_number": 14,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 15.8,
+      "row_count": 100
+    },
+    "q15": {
+      "query_id": "q15",
+      "query_number": 15,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.77,
+      "row_count": 100
+    },
+    "q16": {
+      "query_id": "q16",
+      "query_number": 16,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.7,
+      "row_count": 1
+    },
+    "q17": {
+      "query_id": "q17",
+      "query_number": 17,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.82,
+      "row_count": 0
+    },
+    "q18": {
+      "query_id": "q18",
+      "query_number": 18,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.79,
+      "row_count": 100
+    },
+    "q19": {
+      "query_id": "q19",
+      "query_number": 19,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.3,
+      "row_count": 100
+    },
+    "q20": {
+      "query_id": "q20",
+      "query_number": 20,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.16,
+      "row_count": 100
+    },
+    "q21": {
+      "query_id": "q21",
+      "query_number": 21,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.68,
+      "row_count": 100
+    },
+    "q22": {
+      "query_id": "q22",
+      "query_number": 22,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.35,
+      "row_count": 100
+    },
+    "q23": {
+      "query_id": "q23",
+      "query_number": 23,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.81,
+      "row_count": 4
+    },
+    "q24": {
+      "query_id": "q24",
+      "query_number": 24,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.56,
+      "row_count": 1
+    },
+    "q25": {
+      "query_id": "q25",
+      "query_number": 25,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.59,
+      "row_count": 1
+    },
+    "q26": {
+      "query_id": "q26",
+      "query_number": 26,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.86,
+      "row_count": 100
+    },
+    "q27": {
+      "query_id": "q27",
+      "query_number": 27,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.76,
+      "row_count": 100
+    },
+    "q28": {
+      "query_id": "q28",
+      "query_number": 28,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.82,
+      "row_count": 1
+    },
+    "q29": {
+      "query_id": "q29",
+      "query_number": 29,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.99,
+      "row_count": 1
+    },
+    "q30": {
+      "query_id": "q30",
+      "query_number": 30,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 1.83,
+      "row_count": 100
+    },
+    "q31": {
+      "query_id": "q31",
+      "query_number": 31,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.43,
+      "row_count": 44
+    },
+    "q32": {
+      "query_id": "q32",
+      "query_number": 32,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.96,
+      "row_count": 1
+    },
+    "q33": {
+      "query_id": "q33",
+      "query_number": 33,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.74,
+      "row_count": 100
+    },
+    "q34": {
+      "query_id": "q34",
+      "query_number": 34,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.0,
+      "row_count": 455
+    },
+    "q35": {
+      "query_id": "q35",
+      "query_number": 35,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.15,
+      "row_count": 100
+    },
+    "q36": {
+      "query_id": "q36",
+      "query_number": 36,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.3,
+      "row_count": 100
+    },
+    "q37": {
+      "query_id": "q37",
+      "query_number": 37,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.41,
+      "row_count": 1
+    },
+    "q38": {
+      "query_id": "q38",
+      "query_number": 38,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.25,
+      "row_count": 1
+    },
+    "q39": {
+      "query_id": "q39",
+      "query_number": 39,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.55,
+      "row_count": 243
+    },
+    "q40": {
+      "query_id": "q40",
+      "query_number": 40,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.76,
+      "row_count": 100
+    },
+    "q41": {
+      "query_id": "q41",
+      "query_number": 41,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 1.12,
+      "row_count": 4
+    },
+    "q42": {
+      "query_id": "q42",
+      "query_number": 42,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.23,
+      "row_count": 10
+    },
+    "q43": {
+      "query_id": "q43",
+      "query_number": 43,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.06,
+      "row_count": 6
+    },
+    "q44": {
+      "query_id": "q44",
+      "query_number": 44,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.02,
+      "row_count": 10
+    },
+    "q45": {
+      "query_id": "q45",
+      "query_number": 45,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.57,
+      "row_count": 19
+    },
+    "q46": {
+      "query_id": "q46",
+      "query_number": 46,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.2,
+      "row_count": 100
+    },
+    "q47": {
+      "query_id": "q47",
+      "query_number": 47,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.95,
+      "row_count": 100
+    },
+    "q48": {
+      "query_id": "q48",
+      "query_number": 48,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.57,
+      "row_count": 1
+    },
+    "q49": {
+      "query_id": "q49",
+      "query_number": 49,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.88,
+      "row_count": 34
+    },
+    "q50": {
+      "query_id": "q50",
+      "query_number": 50,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.22,
+      "row_count": 6
+    },
+    "q51": {
+      "query_id": "q51",
+      "query_number": 51,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.84,
+      "row_count": 100
+    },
+    "q52": {
+      "query_id": "q52",
+      "query_number": 52,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.07,
+      "row_count": 100
+    },
+    "q53": {
+      "query_id": "q53",
+      "query_number": 53,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.49,
+      "row_count": 100
+    },
+    "q54": {
+      "query_id": "q54",
+      "query_number": 54,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.31,
+      "row_count": 1
+    },
+    "q55": {
+      "query_id": "q55",
+      "query_number": 55,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.27,
+      "row_count": 100
+    },
+    "q56": {
+      "query_id": "q56",
+      "query_number": 56,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.02,
+      "row_count": 100
+    },
+    "q57": {
+      "query_id": "q57",
+      "query_number": 57,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.1,
+      "row_count": 100
+    },
+    "q58": {
+      "query_id": "q58",
+      "query_number": 58,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.45,
+      "row_count": 5
+    },
+    "q59": {
+      "query_id": "q59",
+      "query_number": 59,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.66,
+      "row_count": 100
+    },
+    "q60": {
+      "query_id": "q60",
+      "query_number": 60,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.55,
+      "row_count": 100
+    },
+    "q61": {
+      "query_id": "q61",
+      "query_number": 61,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.93,
+      "row_count": 1
+    },
+    "q62": {
+      "query_id": "q62",
+      "query_number": 62,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.89,
+      "row_count": 100
+    },
+    "q63": {
+      "query_id": "q63",
+      "query_number": 63,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.92,
+      "row_count": 100
+    },
+    "q64": {
+      "query_id": "q64",
+      "query_number": 64,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 8.66,
+      "row_count": 2
+    },
+    "q65": {
+      "query_id": "q65",
+      "query_number": 65,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.29,
+      "row_count": 100
+    },
+    "q66": {
+      "query_id": "q66",
+      "query_number": 66,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.21,
+      "row_count": 5
+    },
+    "q67": {
+      "query_id": "q67",
+      "query_number": 67,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.17,
+      "row_count": 100
+    },
+    "q68": {
+      "query_id": "q68",
+      "query_number": 68,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.77,
+      "row_count": 100
+    },
+    "q69": {
+      "query_id": "q69",
+      "query_number": 69,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.99,
+      "row_count": 100
+    },
+    "q70": {
+      "query_id": "q70",
+      "query_number": 70,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.33,
+      "row_count": 3
+    },
+    "q71": {
+      "query_id": "q71",
+      "query_number": 71,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.39,
+      "row_count": 1031
+    },
+    "q72": {
+      "query_id": "q72",
+      "query_number": 72,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.42,
+      "row_count": 100
+    },
+    "q73": {
+      "query_id": "q73",
+      "query_number": 73,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.48,
+      "row_count": 1
+    },
+    "q74": {
+      "query_id": "q74",
+      "query_number": 74,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.29,
+      "row_count": 92
+    },
+    "q75": {
+      "query_id": "q75",
+      "query_number": 75,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.96,
+      "row_count": 100
+    },
+    "q76": {
+      "query_id": "q76",
+      "query_number": 76,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.98,
+      "row_count": 100
+    },
+    "q77": {
+      "query_id": "q77",
+      "query_number": 77,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 5.98,
+      "row_count": 44
+    },
+    "q78": {
+      "query_id": "q78",
+      "query_number": 78,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.88,
+      "row_count": 100
+    },
+    "q79": {
+      "query_id": "q79",
+      "query_number": 79,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.35,
+      "row_count": 100
+    },
+    "q80": {
+      "query_id": "q80",
+      "query_number": 80,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.91,
+      "row_count": 100
+    },
+    "q81": {
+      "query_id": "q81",
+      "query_number": 81,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.23,
+      "row_count": 100
+    },
+    "q82": {
+      "query_id": "q82",
+      "query_number": 82,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.04,
+      "row_count": 2
+    },
+    "q83": {
+      "query_id": "q83",
+      "query_number": 83,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.99,
+      "row_count": 24
+    },
+    "q84": {
+      "query_id": "q84",
+      "query_number": 84,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.69,
+      "row_count": 16
+    },
+    "q85": {
+      "query_id": "q85",
+      "query_number": 85,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.47,
+      "row_count": 1
+    },
+    "q86": {
+      "query_id": "q86",
+      "query_number": 86,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.08,
+      "row_count": 100
+    },
+    "q87": {
+      "query_id": "q87",
+      "query_number": 87,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.76,
+      "row_count": 1
+    },
+    "q88": {
+      "query_id": "q88",
+      "query_number": 88,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 12.76,
+      "row_count": 1
+    },
+    "q89": {
+      "query_id": "q89",
+      "query_number": 89,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.41,
+      "row_count": 100
+    },
+    "q90": {
+      "query_id": "q90",
+      "query_number": 90,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.24,
+      "row_count": 1
+    },
+    "q91": {
+      "query_id": "q91",
+      "query_number": 91,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.72,
+      "row_count": 2
+    },
+    "q92": {
+      "query_id": "q92",
+      "query_number": 92,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.81,
+      "row_count": 1
+    },
+    "q93": {
+      "query_id": "q93",
+      "query_number": 93,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.38,
+      "row_count": 100
+    },
+    "q94": {
+      "query_id": "q94",
+      "query_number": 94,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.75,
+      "row_count": 1
+    },
+    "q95": {
+      "query_id": "q95",
+      "query_number": 95,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.35,
+      "row_count": 1
+    },
+    "q96": {
+      "query_id": "q96",
+      "query_number": 96,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.73,
+      "row_count": 1
+    },
+    "q97": {
+      "query_id": "q97",
+      "query_number": 97,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 4.37,
+      "row_count": 1
+    },
+    "q98": {
+      "query_id": "q98",
+      "query_number": 98,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 2.56,
+      "row_count": 2521
+    },
+    "q99": {
+      "query_id": "q99",
+      "query_number": 99,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 3.44,
+      "row_count": 90
+    }
+  },
+  "end_time": "2025-10-08T15:03:10.487229",
+  "summary": {
+    "total_queries": 99,
+    "successful_queries": 99,
+    "failed_queries": 0,
+    "total_query_time": 447.24,
+    "average_query_time": 4.52,
+    "min_query_time": 1.01,
+    "max_query_time": 15.8,
+    "total_execution_time": 447.34
+  }
+}

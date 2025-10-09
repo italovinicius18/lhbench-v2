@@ -1,0 +1,239 @@
+{
+  "benchmark": "TPC-DS",
+  "version": "3.2.0",
+  "total_queries": 99,
+  "description": "Complete TPC-DS query set with categorization and metadata",
+
+  "categories": {
+    "reporting": {
+      "description": "Basic reporting queries with simple aggregations",
+      "queries": [1, 6, 10, 13, 18, 20, 21, 27, 32, 43, 46, 52, 53, 55, 56, 61, 65, 71, 81, 85, 94]
+    },
+    "ad_hoc": {
+      "description": "Ad-hoc analysis queries with complex filtering",
+      "queries": [2, 5, 11, 15, 19, 22, 29, 35, 40, 45, 48, 50, 62, 66, 70, 76, 79, 83, 87, 92, 96]
+    },
+    "iterative": {
+      "description": "Iterative OLAP queries with drill-down patterns",
+      "queries": [3, 7, 12, 16, 23, 30, 36, 41, 47, 54, 59, 63, 67, 73, 77, 80, 84, 88, 93, 97]
+    },
+    "data_mining": {
+      "description": "Data mining queries with complex analytics",
+      "queries": [4, 8, 14, 24, 28, 33, 37, 42, 49, 57, 60, 64, 68, 74, 78, 82, 86, 89, 91, 95, 98]
+    },
+    "decision_support": {
+      "description": "Decision support queries with window functions",
+      "queries": [9, 17, 25, 26, 31, 34, 38, 39, 44, 51, 58, 69, 72, 75, 90, 99]
+    }
+  },
+
+  "tiers": {
+    "tier1_essential": {
+      "description": "Essential queries for basic benchmark (10 queries)",
+      "complexity": "low-medium",
+      "recommended_for": "initial testing",
+      "queries": [3, 7, 19, 34, 42, 52, 55, 59, 73, 79]
+    },
+    "tier2_advanced": {
+      "description": "Advanced queries with complex operations (15 queries)",
+      "complexity": "medium-high",
+      "recommended_for": "comprehensive testing",
+      "queries": [4, 11, 14, 23, 39, 47, 63, 64, 68, 72, 78, 82, 89, 95, 98]
+    },
+    "tier3_stress": {
+      "description": "Stress test queries with extreme complexity (10 queries)",
+      "complexity": "very high",
+      "recommended_for": "performance limits testing",
+      "queries": [14, 24, 64, 72, 78, 83, 90, 91, 95, 98]
+    }
+  },
+
+  "features": {
+    "window_functions": {
+      "description": "Queries using window functions (RANK, ROW_NUMBER, LAG, LEAD)",
+      "queries": [12, 17, 34, 36, 39, 47, 49, 51, 53, 57, 63, 70, 86, 98]
+    },
+    "subqueries": {
+      "description": "Queries with correlated or complex subqueries",
+      "queries": [2, 13, 14, 23, 24, 34, 48, 64, 78, 83, 90, 91, 95]
+    },
+    "rollup_cube": {
+      "description": "Queries using ROLLUP or CUBE",
+      "queries": [5, 18, 27, 36, 42, 67, 77, 80]
+    },
+    "self_joins": {
+      "description": "Queries with self-joins",
+      "queries": [14, 23, 24, 64, 78]
+    },
+    "many_joins": {
+      "description": "Queries joining 8+ tables",
+      "queries": [14, 24, 64, 72, 78, 90, 95]
+    },
+    "date_arithmetic": {
+      "description": "Queries with complex date calculations",
+      "queries": [5, 12, 16, 20, 21, 32, 37, 40, 82, 92]
+    }
+  },
+
+  "channels": {
+    "store": {
+      "description": "Queries primarily analyzing store channel",
+      "queries": [8, 10, 18, 28, 38, 45, 53, 73, 88]
+    },
+    "catalog": {
+      "description": "Queries primarily analyzing catalog channel",
+      "queries": [16, 35, 56, 65, 84, 94]
+    },
+    "web": {
+      "description": "Queries primarily analyzing web channel",
+      "queries": [11, 30, 37, 61, 75, 92]
+    },
+    "cross_channel": {
+      "description": "Queries comparing multiple channels",
+      "queries": [7, 14, 24, 64, 78]
+    }
+  },
+
+  "performance_characteristics": {
+    "fast": {
+      "description": "Typically completes in < 5s (SF=1)",
+      "queries": [1, 6, 10, 13, 21, 27, 43, 46, 55, 61, 71, 81]
+    },
+    "medium": {
+      "description": "Typically completes in 5-15s (SF=1)",
+      "queries": [3, 7, 19, 20, 34, 42, 52, 59, 73, 79, 85, 94]
+    },
+    "slow": {
+      "description": "Typically completes in 15-30s (SF=1)",
+      "queries": [14, 23, 24, 39, 64, 72, 78, 82, 90, 95]
+    },
+    "very_slow": {
+      "description": "Typically completes in > 30s (SF=1)",
+      "queries": [64, 78, 91, 95]
+    }
+  },
+
+  "query_details": {
+    "q3": {
+      "name": "Shipping Priority",
+      "description": "Identify high-value customers with orders ready to ship",
+      "tables": ["date_dim", "customer", "store_sales", "item"],
+      "operations": ["join", "group_by", "order_by", "limit"],
+      "estimated_rows_sf1": 100
+    },
+    "q7": {
+      "name": "Cross-Channel Revenue",
+      "description": "Compare revenue across sales channels",
+      "tables": ["store_sales", "catalog_sales", "web_sales", "date_dim", "item", "promotion"],
+      "operations": ["union", "group_by", "order_by"],
+      "estimated_rows_sf1": 1000
+    },
+    "q19": {
+      "name": "Brand Analysis",
+      "description": "Analyze brand performance with ranking",
+      "tables": ["date_dim", "store_sales", "item", "customer", "customer_address", "store"],
+      "operations": ["join", "group_by", "window_function", "order_by"],
+      "estimated_rows_sf1": 200
+    },
+    "q34": {
+      "name": "Customer Filtering",
+      "description": "Filter customers based on purchase patterns",
+      "tables": ["date_dim", "store_sales", "customer", "customer_demographics", "household_demographics", "store"],
+      "operations": ["join", "subquery", "group_by", "having"],
+      "estimated_rows_sf1": 500
+    },
+    "q42": {
+      "name": "Category Rollup",
+      "description": "Sales by category with rollup",
+      "tables": ["date_dim", "store_sales", "item"],
+      "operations": ["join", "group_by_rollup", "order_by"],
+      "estimated_rows_sf1": 300
+    },
+    "q52": {
+      "name": "Brand Revenue",
+      "description": "Weekly brand revenue analysis",
+      "tables": ["date_dim", "store_sales", "item"],
+      "operations": ["join", "group_by", "order_by"],
+      "estimated_rows_sf1": 150
+    },
+    "q55": {
+      "name": "Total Revenue",
+      "description": "Total revenue by brand",
+      "tables": ["date_dim", "store_sales", "item"],
+      "operations": ["join", "group_by", "order_by"],
+      "estimated_rows_sf1": 100
+    },
+    "q59": {
+      "name": "Weekly Sales",
+      "description": "Weekly sales analysis with window functions",
+      "tables": ["date_dim", "store_sales", "date_dim"],
+      "operations": ["join", "window_function", "group_by"],
+      "estimated_rows_sf1": 400
+    },
+    "q73": {
+      "name": "Store Revenue",
+      "description": "Store revenue analysis by county",
+      "tables": ["date_dim", "store_sales", "store", "household_demographics", "customer"],
+      "operations": ["join", "group_by", "having", "order_by"],
+      "estimated_rows_sf1": 50
+    },
+    "q79": {
+      "name": "Return Analysis",
+      "description": "Analyze return patterns by channel",
+      "tables": ["date_dim", "store_sales", "store_returns", "catalog_sales", "catalog_returns", "web_sales", "web_returns"],
+      "operations": ["join", "group_by", "order_by"],
+      "estimated_rows_sf1": 30
+    }
+  },
+
+  "lhbench_comparison": {
+    "description": "Queries used in LHBench (Berkeley) TPC-DS benchmark",
+    "refresh_test_queries": {
+      "description": "5 sample queries used in TPC-DS Refresh test",
+      "queries": [3, 9, 34, 42, 59],
+      "note": "These queries are run before and after refresh operations"
+    },
+    "standard_run_queries": {
+      "description": "Full query set for standard TPC-DS run",
+      "queries": "all",
+      "note": "LHBench runs all 99 queries for comprehensive comparison"
+    }
+  },
+
+  "validation": {
+    "total_queries_created": 99,
+    "query_files": "q01.sql through q99.sql",
+    "location": "configs/queries/tpcds/",
+    "source": "TPC-DS v3.2.0 official query templates",
+    "substitution_required": true,
+    "substitution_note": "Queries contain [_LIMITA], [_LIMITB], etc. placeholders that need to be replaced with actual values"
+  },
+
+  "substitution_parameters": {
+    "description": "TPC-DS queries use substitution parameters",
+    "parameters": {
+      "_LIMITA": "Typically 100",
+      "_LIMITB": "Typically 100",
+      "_LIMITC": "Typically 100",
+      "date_values": "Replace with specific dates based on dataset date range",
+      "numeric_values": "Replace with values appropriate for scale factor"
+    },
+    "example": "Query 3 uses [_LIMITC] which should be replaced with '100' for standard runs"
+  },
+
+  "execution_order": {
+    "description": "Recommended query execution order",
+    "sequential": {
+      "description": "Run queries in order 1-99",
+      "use_case": "Standard TPC-DS benchmark"
+    },
+    "by_tier": {
+      "description": "Run tier1 → tier2 → tier3",
+      "use_case": "Progressive performance testing"
+    },
+    "by_complexity": {
+      "description": "Run fast → medium → slow → very_slow",
+      "use_case": "Quick validation before full run"
+    }
+  }
+}

@@ -1,6 +1,6 @@
-.PHONY: help setup build up down logs clean benchmark status
+.PHONY: help all build up down clean benchmark results
 
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL := all
 
 # Colors for output
 GREEN  := $(shell tput -Txterm setaf 2)
@@ -8,183 +8,159 @@ YELLOW := $(shell tput -Txterm setaf 3)
 BLUE   := $(shell tput -Txterm setaf 4)
 RESET  := $(shell tput -Txterm sgr0)
 
-# Configuration
+# Configuration from .env
+-include .env
+export
+
+# Default values
+SF ?= $(TPCDS_SCALE_FACTOR)
+TIER ?= $(TPCDS_QUERY_TIER)
 DATA_DIR := /mnt/c/Users/italo/WSL_DATA/lakehouse-data
 
 help: ## Show this help message
-	@echo '$(BLUE)Lakehouse Benchmark - Available Commands$(RESET)'
+	@echo '$(BLUE)TPC-DS Lakehouse Benchmark$(RESET)'
 	@echo ''
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(GREEN)%-20s$(RESET) %s\n", $$1, $$2}'
+	@echo '$(YELLOW)Quick Start:$(RESET)'
+	@echo '  make          - Build and run complete benchmark'
+	@echo '  make SF=10    - Run with scale factor 10'
 	@echo ''
+	@echo '$(YELLOW)Available Commands:$(RESET)'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-15s$(RESET) %s\n", $$1, $$2}'
 
-setup: ## Initial setup - create directories and .env
+# ============================================================================
+# MAIN AUTOMATION - Run everything with one command
+# ============================================================================
+
+all: setup build benchmark results ## Complete automated benchmark (default)
+
+benchmark: up bronze silver gold ## Run complete TPC-DS benchmark (all phases)
+	@echo '$(GREEN)✅ Benchmark complete! Check results/metrics/ for results$(RESET)'
+
+# ============================================================================
+# SETUP
+# ============================================================================
+
+setup: ## Setup environment (.env and directories)
 	@echo '$(YELLOW)🔧 Setting up environment...$(RESET)'
 	@if [ ! -f .env ]; then \
 		cp .env.example .env; \
-		echo '$(GREEN)✓ Created .env file from .env.example$(RESET)'; \
-		echo '$(YELLOW)⚠ Please edit .env with your configuration$(RESET)'; \
-	else \
-		echo '$(GREEN)✓ .env already exists$(RESET)'; \
+		echo '$(GREEN)✓ Created .env file$(RESET)'; \
 	fi
-	@mkdir -p $(DATA_DIR)/{bronze,silver,gold}
-	@mkdir -p $(DATA_DIR)/bronze/tpch/{_metadata,sf1,sf10,sf100}
-	@mkdir -p $(DATA_DIR)/silver/{iceberg,delta,hudi}
-	@mkdir -p $(DATA_DIR)/gold/{metrics,reports}
-	@echo '$(GREEN)✓ Data directories created$(RESET)'
-	@echo '$(GREEN)✅ Setup complete!$(RESET)'
+	@mkdir -p $(DATA_DIR)/{bronze/tpcds,silver/{delta,iceberg,hudi},gold/metrics}
+	@mkdir -p results/metrics
+	@echo '$(GREEN)✓ Directories created$(RESET)'
 
-build: ## Build all Docker images
+# ============================================================================
+# DOCKER MANAGEMENT
+# ============================================================================
+
+build: ## Build Docker images
 	@echo '$(YELLOW)🐳 Building Docker images...$(RESET)'
-	docker compose build
-	@echo '$(GREEN)✅ Build complete!$(RESET)'
+	@docker compose build
+	@echo '$(GREEN)✅ Images built$(RESET)'
 
-up: ## Start all services
-	@echo '$(YELLOW)🚀 Starting services...$(RESET)'
-	docker compose up -d spark-master spark-worker-1 spark-worker-2
-	@echo '$(GREEN)✓ Waiting for Spark cluster to be ready...$(RESET)'
+up: ## Start Spark cluster
+	@echo '$(YELLOW)🚀 Starting Spark cluster...$(RESET)'
+	@docker compose up -d
+	@echo '$(YELLOW)⏳ Waiting for cluster to be ready...$(RESET)'
 	@sleep 10
-	@echo '$(GREEN)✅ Services started!$(RESET)'
-	@echo ''
-	@echo '$(BLUE)Spark Master UI:$(RESET) http://localhost:8080'
-	@echo '$(BLUE)Worker 1 UI:$(RESET)     http://localhost:8081'
-	@echo '$(BLUE)Worker 2 UI:$(RESET)     http://localhost:8082'
+	@echo '$(GREEN)✅ Cluster ready$(RESET)'
+	@echo '$(BLUE)Spark UI: http://localhost:8080$(RESET)'
 
 down: ## Stop all services
-	@echo '$(YELLOW)🛑 Stopping services...$(RESET)'
-	docker compose down
+	@docker compose down
 	@echo '$(GREEN)✅ Services stopped$(RESET)'
 
-logs: ## Show logs from all services
-	docker compose logs -f
+restart: down up ## Restart cluster
 
-status: ## Show status of all services
-	@echo '$(BLUE)📊 Service Status:$(RESET)'
+# ============================================================================
+# BENCHMARK PHASES
+# ============================================================================
+
+bronze: ## Phase 1: Generate TPC-DS data
+	@echo '$(BLUE)📦 Phase 1/3: Generating TPC-DS data (SF=$(SF))...$(RESET)'
+	@docker compose exec spark-master bash -c "TPCDS_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/bronze/generate_tpcds_data_duckdb.py"
+	@echo '$(GREEN)✓ Bronze phase complete$(RESET)'
+
+silver: ## Phase 2: Convert to lakehouse formats (Delta, Iceberg, Hudi)
+	@echo '$(BLUE)🔄 Phase 2/3: Converting to lakehouse formats (SF=$(SF))...$(RESET)'
+	@echo '$(YELLOW)Converting to Delta Lake...$(RESET)'
+	@docker compose exec spark-master bash -c "TPCDS_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/delta/convert_tables_tpcds.py"
+	@echo '$(YELLOW)Converting to Iceberg...$(RESET)'
+	@docker compose exec spark-master bash -c "TPCDS_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/iceberg/convert_tables_tpcds.py"
+	@echo '$(YELLOW)Converting to Hudi...$(RESET)'
+	@docker compose exec spark-master bash -c "TPCDS_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/hudi/convert_tables_tpcds.py"
+	@echo '$(GREEN)✓ Silver phase complete$(RESET)'
+
+gold: ## Phase 3: Run TPC-DS queries on all formats
+	@echo '$(BLUE)⚡ Phase 3/3: Running TPC-DS queries (SF=$(SF), Tier=$(TIER))...$(RESET)'
+	@echo '$(YELLOW)Executing Delta queries...$(RESET)'
+	@docker compose exec spark-master bash -c "FRAMEWORK=delta TPCDS_SCALE_FACTOR=$(SF) TIER=$(TIER) python3 /opt/spark/jobs/gold/tpcds_query_executor.py"
+	@echo '$(YELLOW)Executing Iceberg queries...$(RESET)'
+	@docker compose exec spark-master bash -c "FRAMEWORK=iceberg TPCDS_SCALE_FACTOR=$(SF) TIER=$(TIER) python3 /opt/spark/jobs/gold/tpcds_query_executor.py"
+	@echo '$(YELLOW)Executing Hudi queries...$(RESET)'
+	@docker compose exec spark-master bash -c "FRAMEWORK=hudi TPCDS_SCALE_FACTOR=$(SF) TIER=$(TIER) python3 /opt/spark/jobs/gold/tpcds_query_executor.py"
+	@echo '$(GREEN)✓ Gold phase complete$(RESET)'
+
+# ============================================================================
+# TIER-SPECIFIC QUERIES
+# ============================================================================
+
+tier1: ## Run tier1 queries (10 essential)
+	@$(MAKE) gold TIER=tier1
+
+tier2: ## Run tier2 queries (15 advanced)
+	@$(MAKE) gold TIER=tier2
+
+tier3: ## Run tier3 queries (10 stress)
+	@$(MAKE) gold TIER=tier3
+
+lhbench: ## Run LHBench queries (5 refresh test)
+	@$(MAKE) gold TIER=lhbench
+
+# ============================================================================
+# RESULTS & UTILITIES
+# ============================================================================
+
+results: ## Copy results from container to local
+	@echo '$(YELLOW)📊 Copying results...$(RESET)'
+	@docker compose cp spark-master:/data/gold/metrics/. results/metrics/ 2>/dev/null || true
+	@echo '$(GREEN)✓ Results copied to results/metrics/$(RESET)'
+
+logs: ## Show Spark cluster logs
+	@docker compose logs -f
+
+status: ## Show cluster status
 	@docker compose ps
 
-# ============================================================================
-# BENCHMARK EXECUTION
-# ============================================================================
+shell: ## Open shell in Spark master
+	@docker compose exec spark-master /bin/bash
 
-# Default scale factor
-SF ?= 1
-
-benchmark: ## Run complete benchmark (all phases). Usage: make benchmark SF=1
-	@echo '$(YELLOW)🏁 Starting complete benchmark (SF=$(SF))...$(RESET)'
-	@echo '$(BLUE)Phase 1/3: Bronze (data generation)...$(RESET)'
-	@$(MAKE) benchmark-bronze SF=$(SF)
-	@echo '$(BLUE)Phase 2/3: Silver (lakehouse conversion)...$(RESET)'
-	@$(MAKE) benchmark-silver SF=$(SF)
-	@echo '$(BLUE)Phase 3/3: Gold (query execution)...$(RESET)'
-	@$(MAKE) benchmark-gold SF=$(SF)
-	@echo '$(GREEN)✅ Benchmark complete!$(RESET)'
-
-benchmark-bronze: ## Run Bronze phase only (data generation). Usage: make benchmark-bronze SF=1
-	@echo '$(YELLOW)📦 Running Bronze phase (SF=$(SF))...$(RESET)'
-	docker compose --profile datagen run --rm -e TPCH_SCALE_FACTOR=$(SF) tpchgen
-	@echo '$(GREEN)✅ Bronze phase complete!$(RESET)'
-
-benchmark-silver: ## Run Silver phase only (all frameworks). Usage: make benchmark-silver SF=1
-	@echo '$(YELLOW)🔄 Running Silver phase (SF=$(SF))...$(RESET)'
-	@echo '$(BLUE)Converting to Delta Lake...$(RESET)'
-	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/delta/convert_tables.py"
-	@echo '$(BLUE)Converting to Iceberg...$(RESET)'
-	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/iceberg/convert_tables.py"
-	@echo '$(BLUE)Converting to Hudi...$(RESET)'
-	docker compose exec spark-master bash -c "TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/silver/hudi/convert_tables.py"
-	@echo '$(GREEN)✅ Silver phase complete!$(RESET)'
-
-benchmark-gold: ## Run Gold phase only (queries). Usage: make benchmark-gold SF=1
-	@echo '$(YELLOW)⚡ Running Gold phase (SF=$(SF))...$(RESET)'
-	@echo '$(BLUE)Executing Delta queries...$(RESET)'
-	docker compose exec spark-master bash -c "FRAMEWORK=delta TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
-	@echo '$(BLUE)Executing Iceberg queries...$(RESET)'
-	docker compose exec spark-master bash -c "FRAMEWORK=iceberg TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
-	@echo '$(BLUE)Executing Hudi queries...$(RESET)'
-	docker compose exec spark-master bash -c "FRAMEWORK=hudi TPCH_SCALE_FACTOR=$(SF) python3 /opt/spark/jobs/gold/query_executor.py"
-	@echo '$(GREEN)✅ Gold phase complete!$(RESET)'
-
-# ============================================================================
-# UTILITIES
-# ============================================================================
-
-spark-ui: ## Open Spark Master UI in browser
-	@echo '$(BLUE)🌐 Opening Spark UI...$(RESET)'
-	@python -m webbrowser http://localhost:8080 2>/dev/null || \
+ui: ## Open Spark UI in browser
+	@python3 -m webbrowser http://localhost:8080 2>/dev/null || \
 		xdg-open http://localhost:8080 2>/dev/null || \
 		open http://localhost:8080 2>/dev/null || \
-		echo 'Please open http://localhost:8080 in your browser'
+		echo '$(BLUE)Spark UI: http://localhost:8080$(RESET)'
 
-shell-spark: ## Open shell in Spark master container
-	docker compose exec spark-master /bin/bash
+# ============================================================================
+# CLEANUP
+# ============================================================================
 
-clean-cache: ## Clean Spark cache and temp files
-	@echo '$(YELLOW)🧹 Cleaning cache...$(RESET)'
-	docker compose exec spark-master rm -rf /tmp/spark-* 2>/dev/null || true
-	docker run --rm -v $(shell pwd):/workspace alpine sh -c "find /workspace -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true"
-	@echo '$(GREEN)✅ Cache cleaned$(RESET)'
+clean: ## Stop services and remove containers
+	@docker compose down -v
+	@echo '$(GREEN)✅ Cleanup complete$(RESET)'
 
-clean: ## Clean all data and containers
-	@echo '$(YELLOW)🧹 Cleaning up...$(RESET)'
-	@read -p "This will delete all data and containers. Continue? [y/N] " -n 1 -r; \
+clean-data: ## Remove all generated data (WARNING: destructive)
+	@read -p "Delete all data in $(DATA_DIR)? [y/N] " -n 1 -r; \
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
-		docker compose down -v; \
-		rm -rf $(DATA_DIR)/*; \
-		echo '$(GREEN)✅ Cleanup complete$(RESET)'; \
-	else \
-		echo '$(YELLOW)Cancelled$(RESET)'; \
+		rm -rf $(DATA_DIR)/{bronze,silver,gold}/*; \
+		echo '$(GREEN)✅ Data deleted$(RESET)'; \
 	fi
 
-clean-results: ## Clean only results directory
-	@echo '$(YELLOW)🧹 Cleaning results...$(RESET)'
-	rm -rf results/*
+clean-results: ## Remove local results
+	@rm -rf results/metrics/*
 	@echo '$(GREEN)✅ Results cleaned$(RESET)'
 
-reset: ## Reset benchmark state
-	@echo '$(YELLOW)🔄 Resetting benchmark state...$(RESET)'
-	rm -f $(DATA_DIR)/bronze/tpch/_metadata/state.json
-	@echo '$(GREEN)✅ State reset$(RESET)'
-
-# ============================================================================
-# DEVELOPMENT
-# ============================================================================
-
-test: ## Run tests
-	@echo '$(YELLOW)🧪 Running tests...$(RESET)'
-	pytest tests/ -v
-	@echo '$(GREEN)✅ Tests complete$(RESET)'
-
-lint: ## Run linters
-	@echo '$(YELLOW)🔍 Running linters...$(RESET)'
-	flake8 scripts/ spark_jobs/
-	black --check scripts/ spark_jobs/
-	@echo '$(GREEN)✅ Linting complete$(RESET)'
-
-format: ## Format code
-	@echo '$(YELLOW)✨ Formatting code...$(RESET)'
-	black scripts/ spark_jobs/
-	@echo '$(GREEN)✅ Formatting complete$(RESET)'
-
-# ============================================================================
-# INFORMATION
-# ============================================================================
-
-info: ## Show configuration info
-	@echo '$(BLUE)ℹ Configuration Information:$(RESET)'
-	@echo ''
-	@if [ -f .env ]; then \
-		echo '$(GREEN)TPCH_SCALE_FACTOR$(RESET):' $$(grep TPCH_SCALE_FACTOR .env | cut -d '=' -f2); \
-		echo '$(GREEN)FRAMEWORKS$(RESET):' $$(grep '^FRAMEWORKS=' .env | cut -d '=' -f2); \
-		echo '$(GREEN)SPARK_WORKER_CORES$(RESET):' $$(grep SPARK_WORKER_CORES .env | cut -d '=' -f2); \
-		echo '$(GREEN)SPARK_WORKER_MEMORY$(RESET):' $$(grep SPARK_WORKER_MEMORY .env | cut -d '=' -f2); \
-	else \
-		echo '$(YELLOW)No .env file found. Run "make setup" first.$(RESET)'; \
-	fi
-	@echo ''
-	@echo '$(BLUE)Data Directory:$(RESET) $(DATA_DIR)'
-
-version: ## Show versions
-	@echo '$(BLUE)📦 Version Information:$(RESET)'
-	@docker --version
-	@docker compose --version
-	@echo ''
+clean-all: clean clean-data clean-results ## Complete cleanup
+	@echo '$(GREEN)✅ Complete cleanup done$(RESET)'

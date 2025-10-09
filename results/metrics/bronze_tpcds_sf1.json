@@ -1,0 +1,159 @@
+{
+  "scale_factor": 1,
+  "start_time": "2025-10-09T00:23:06.167330",
+  "generation_time_seconds": 13.38,
+  "tables": {
+    "store_sales": {
+      "status": "success",
+      "rows": 2880404,
+      "size_mb": 146.98,
+      "duration_seconds": 1.99
+    },
+    "store_returns": {
+      "status": "success",
+      "rows": 287867,
+      "size_mb": 18.67,
+      "duration_seconds": 0.3
+    },
+    "catalog_sales": {
+      "status": "success",
+      "rows": 1441548,
+      "size_mb": 110.31,
+      "duration_seconds": 1.58
+    },
+    "catalog_returns": {
+      "status": "success",
+      "rows": 144067,
+      "size_mb": 11.85,
+      "duration_seconds": 0.24
+    },
+    "web_sales": {
+      "status": "success",
+      "rows": 719384,
+      "size_mb": 55.56,
+      "duration_seconds": 0.75
+    },
+    "web_returns": {
+      "status": "success",
+      "rows": 71654,
+      "size_mb": 5.75,
+      "duration_seconds": 0.14
+    },
+    "inventory": {
+      "status": "success",
+      "rows": 11745000,
+      "size_mb": 60.48,
+      "duration_seconds": 1.01
+    },
+    "store": {
+      "status": "success",
+      "rows": 12,
+      "size_mb": 0.01,
+      "duration_seconds": 0.07
+    },
+    "call_center": {
+      "status": "success",
+      "rows": 6,
+      "size_mb": 0.01,
+      "duration_seconds": 0.06
+    },
+    "catalog_page": {
+      "status": "success",
+      "rows": 11718,
+      "size_mb": 0.67,
+      "duration_seconds": 0.07
+    },
+    "web_site": {
+      "status": "success",
+      "rows": 30,
+      "size_mb": 0.01,
+      "duration_seconds": 0.06
+    },
+    "web_page": {
+      "status": "success",
+      "rows": 60,
+      "size_mb": 0.0,
+      "duration_seconds": 0.06
+    },
+    "warehouse": {
+      "status": "success",
+      "rows": 5,
+      "size_mb": 0.0,
+      "duration_seconds": 0.07
+    },
+    "customer": {
+      "status": "success",
+      "rows": 100000,
+      "size_mb": 6.46,
+      "duration_seconds": 0.21
+    },
+    "customer_address": {
+      "status": "success",
+      "rows": 50000,
+      "size_mb": 1.41,
+      "duration_seconds": 0.14
+    },
+    "customer_demographics": {
+      "status": "success",
+      "rows": 1920800,
+      "size_mb": 9.28,
+      "duration_seconds": 0.34
+    },
+    "date_dim": {
+      "status": "success",
+      "rows": 73049,
+      "size_mb": 1.8,
+      "duration_seconds": 0.15
+    },
+    "time_dim": {
+      "status": "success",
+      "rows": 86400,
+      "size_mb": 1.12,
+      "duration_seconds": 0.11
+    },
+    "item": {
+      "status": "success",
+      "rows": 18000,
+      "size_mb": 1.88,
+      "duration_seconds": 0.14
+    },
+    "promotion": {
+      "status": "success",
+      "rows": 300,
+      "size_mb": 0.02,
+      "duration_seconds": 0.07
+    },
+    "household_demographics": {
+      "status": "success",
+      "rows": 7200,
+      "size_mb": 0.03,
+      "duration_seconds": 0.07
+    },
+    "income_band": {
+      "status": "success",
+      "rows": 20,
+      "size_mb": 0.0,
+      "duration_seconds": 0.06
+    },
+    "reason": {
+      "status": "success",
+      "rows": 35,
+      "size_mb": 0.0,
+      "duration_seconds": 0.08
+    },
+    "ship_mode": {
+      "status": "success",
+      "rows": 20,
+      "size_mb": 0.0,
+      "duration_seconds": 0.05
+    }
+  },
+  "end_time": "2025-10-09T00:23:14.422409",
+  "export_time_seconds": 8.26,
+  "total_duration_seconds": 21.63,
+  "summary": {
+    "total_tables": 24,
+    "successful": 24,
+    "failed": 0
+  }
+}

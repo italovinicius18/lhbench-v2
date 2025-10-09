@@ -1,0 +1,256 @@
+{
+  "tpcds_version": "3.2.0",
+  "description": "TPC-DS benchmark tables configuration",
+  "tables": {
+    "fact_tables": [
+      {
+        "name": "store_sales",
+        "type": "fact",
+        "primary_key": ["ss_item_sk", "ss_ticket_number"],
+        "partitioned_by": "ss_sold_date_sk",
+        "estimated_rows_sf1": 2880404,
+        "refresh_function": "LF",
+        "description": "Store channel sales transactions"
+      },
+      {
+        "name": "store_returns",
+        "type": "fact",
+        "primary_key": ["sr_item_sk", "sr_ticket_number"],
+        "partitioned_by": "sr_returned_date_sk",
+        "estimated_rows_sf1": 287514,
+        "refresh_function": "LF",
+        "description": "Store channel returns transactions"
+      },
+      {
+        "name": "catalog_sales",
+        "type": "fact",
+        "primary_key": ["cs_item_sk", "cs_order_number"],
+        "partitioned_by": "cs_sold_date_sk",
+        "estimated_rows_sf1": 1441548,
+        "refresh_function": "RF1/RF2",
+        "description": "Catalog channel sales transactions"
+      },
+      {
+        "name": "catalog_returns",
+        "type": "fact",
+        "primary_key": ["cr_item_sk", "cr_order_number"],
+        "partitioned_by": "cr_returned_date_sk",
+        "estimated_rows_sf1": 144067,
+        "refresh_function": "RF1/RF2",
+        "description": "Catalog channel returns transactions"
+      },
+      {
+        "name": "web_sales",
+        "type": "fact",
+        "primary_key": ["ws_item_sk", "ws_order_number"],
+        "partitioned_by": "ws_sold_date_sk",
+        "estimated_rows_sf1": 719384,
+        "refresh_function": "RF1/RF2",
+        "description": "Web channel sales transactions"
+      },
+      {
+        "name": "web_returns",
+        "type": "fact",
+        "primary_key": ["wr_item_sk", "wr_order_number"],
+        "partitioned_by": "wr_returned_date_sk",
+        "estimated_rows_sf1": 71763,
+        "refresh_function": "RF1/RF2",
+        "description": "Web channel returns transactions"
+      },
+      {
+        "name": "inventory",
+        "type": "fact",
+        "primary_key": ["inv_date_sk", "inv_item_sk", "inv_warehouse_sk"],
+        "partitioned_by": "inv_date_sk",
+        "estimated_rows_sf1": 11745000,
+        "refresh_function": "RF1",
+        "description": "Product inventory over time"
+      }
+    ],
+    "dimension_tables": [
+      {
+        "name": "store",
+        "type": "dimension",
+        "primary_key": "s_store_sk",
+        "estimated_rows_sf1": 12,
+        "refresh_function": null,
+        "description": "Store information"
+      },
+      {
+        "name": "call_center",
+        "type": "dimension",
+        "primary_key": "cc_call_center_sk",
+        "estimated_rows_sf1": 6,
+        "refresh_function": null,
+        "description": "Call center information"
+      },
+      {
+        "name": "catalog_page",
+        "type": "dimension",
+        "primary_key": "cp_catalog_page_sk",
+        "estimated_rows_sf1": 11718,
+        "refresh_function": null,
+        "description": "Catalog page information"
+      },
+      {
+        "name": "web_site",
+        "type": "dimension",
+        "primary_key": "web_site_sk",
+        "estimated_rows_sf1": 30,
+        "refresh_function": null,
+        "description": "Web site information"
+      },
+      {
+        "name": "web_page",
+        "type": "dimension",
+        "primary_key": "wp_web_page_sk",
+        "estimated_rows_sf1": 60,
+        "refresh_function": null,
+        "description": "Web page information"
+      },
+      {
+        "name": "warehouse",
+        "type": "dimension",
+        "primary_key": "w_warehouse_sk",
+        "estimated_rows_sf1": 5,
+        "refresh_function": null,
+        "description": "Warehouse information"
+      },
+      {
+        "name": "customer",
+        "type": "dimension",
+        "primary_key": "c_customer_sk",
+        "estimated_rows_sf1": 100000,
+        "refresh_function": null,
+        "description": "Customer information"
+      },
+      {
+        "name": "customer_address",
+        "type": "dimension",
+        "primary_key": "ca_address_sk",
+        "estimated_rows_sf1": 50000,
+        "refresh_function": null,
+        "description": "Customer address information"
+      },
+      {
+        "name": "customer_demographics",
+        "type": "dimension",
+        "primary_key": "cd_demo_sk",
+        "estimated_rows_sf1": 1920800,
+        "refresh_function": null,
+        "description": "Customer demographic information"
+      },
+      {
+        "name": "date_dim",
+        "type": "dimension",
+        "primary_key": "d_date_sk",
+        "estimated_rows_sf1": 73049,
+        "refresh_function": null,
+        "description": "Date dimension (200 years)"
+      },
+      {
+        "name": "time_dim",
+        "type": "dimension",
+        "primary_key": "t_time_sk",
+        "estimated_rows_sf1": 86400,
+        "refresh_function": null,
+        "description": "Time dimension (seconds in a day)"
+      },
+      {
+        "name": "item",
+        "type": "dimension",
+        "primary_key": "i_item_sk",
+        "estimated_rows_sf1": 18000,
+        "refresh_function": null,
+        "description": "Item/product information"
+      },
+      {
+        "name": "promotion",
+        "type": "dimension",
+        "primary_key": "p_promo_sk",
+        "estimated_rows_sf1": 300,
+        "refresh_function": null,
+        "description": "Promotion information"
+      },
+      {
+        "name": "household_demographics",
+        "type": "dimension",
+        "primary_key": "hd_demo_sk",
+        "estimated_rows_sf1": 7200,
+        "refresh_function": null,
+        "description": "Household demographic information"
+      },
+      {
+        "name": "income_band",
+        "type": "dimension",
+        "primary_key": "ib_income_band_sk",
+        "estimated_rows_sf1": 20,
+        "refresh_function": null,
+        "description": "Income band information"
+      },
+      {
+        "name": "reason",
+        "type": "dimension",
+        "primary_key": "r_reason_sk",
+        "estimated_rows_sf1": 35,
+        "refresh_function": null,
+        "description": "Return reason information"
+      },
+      {
+        "name": "ship_mode",
+        "type": "dimension",
+        "primary_key": "sm_ship_mode_sk",
+        "estimated_rows_sf1": 20,
+        "refresh_function": null,
+        "description": "Shipping mode information"
+      }
+    ]
+  },
+  "refresh_functions": {
+    "RF1": {
+      "description": "Insert new sales data",
+      "affected_tables": ["catalog_sales", "catalog_returns", "web_sales", "web_returns", "inventory"],
+      "data_volume_percentage": 0.1,
+      "implementation": "Insert 0.1% new rows"
+    },
+    "RF2": {
+      "description": "Delete old sales data",
+      "affected_tables": ["catalog_sales", "catalog_returns", "web_sales", "web_returns"],
+      "data_volume_percentage": 0.1,
+      "implementation": "Delete 0.1% oldest rows"
+    },
+    "LF": {
+      "description": "Load initial store sales/returns",
+      "affected_tables": ["store_sales", "store_returns"],
+      "data_volume_percentage": 100,
+      "implementation": "Bulk load during initial population"
+    }
+  },
+  "scale_factors": {
+    "1": {
+      "description": "1GB dataset",
+      "total_rows": "~6 million fact rows",
+      "disk_size_gb": 1
+    },
+    "10": {
+      "description": "10GB dataset",
+      "total_rows": "~60 million fact rows",
+      "disk_size_gb": 10
+    },
+    "100": {
+      "description": "100GB dataset",
+      "total_rows": "~600 million fact rows",
+      "disk_size_gb": 100
+    },
+    "1000": {
+      "description": "1TB dataset",
+      "total_rows": "~6 billion fact rows",
+      "disk_size_gb": 1000
+    },
+    "10000": {
+      "description": "10TB dataset",
+      "total_rows": "~60 billion fact rows",
+      "disk_size_gb": 10000
+    }
+  }
+}

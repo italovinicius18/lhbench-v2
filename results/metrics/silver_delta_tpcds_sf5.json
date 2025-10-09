@@ -1,0 +1,232 @@
+{
+  "framework": "delta",
+  "benchmark": "tpcds",
+  "scale_factor": 5,
+  "start_time": "2025-10-09T01:40:35.212335",
+  "tables": {
+    "store_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 14400052,
+      "size_mb": 0,
+      "duration_seconds": 46.64,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "store_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 1438498,
+      "size_mb": 0,
+      "duration_seconds": 7.83,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "catalog_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 7199490,
+      "size_mb": 0,
+      "duration_seconds": 20.0,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "catalog_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 720291,
+      "size_mb": 0,
+      "duration_seconds": 5.13,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "web_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 3599503,
+      "size_mb": 0,
+      "duration_seconds": 11.54,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "web_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 359426,
+      "size_mb": 0,
+      "duration_seconds": 4.54,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "inventory": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 49329000,
+      "size_mb": 0,
+      "duration_seconds": 11.35,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "store": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 52,
+      "size_mb": 0,
+      "duration_seconds": 3.07,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "call_center": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 14,
+      "size_mb": 0,
+      "duration_seconds": 3.0,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "catalog_page": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 11718,
+      "size_mb": 0,
+      "duration_seconds": 2.79,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "web_site": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 34,
+      "size_mb": 0,
+      "duration_seconds": 2.71,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "web_page": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 122,
+      "size_mb": 0,
+      "duration_seconds": 2.71,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "warehouse": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 7,
+      "size_mb": 0,
+      "duration_seconds": 2.72,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "customer": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 277000,
+      "size_mb": 0,
+      "duration_seconds": 3.82,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "customer_address": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 138000,
+      "size_mb": 0,
+      "duration_seconds": 3.14,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "customer_demographics": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 1920800,
+      "size_mb": 0,
+      "duration_seconds": 3.58,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "date_dim": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 73049,
+      "size_mb": 0,
+      "duration_seconds": 3.06,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "time_dim": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 86400,
+      "size_mb": 0,
+      "duration_seconds": 2.63,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "item": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 54000,
+      "size_mb": 0,
+      "duration_seconds": 2.98,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "promotion": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 388,
+      "size_mb": 0,
+      "duration_seconds": 2.35,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "household_demographics": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 7200,
+      "size_mb": 0,
+      "duration_seconds": 2.23,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "income_band": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 20,
+      "size_mb": 0,
+      "duration_seconds": 2.23,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "reason": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 39,
+      "size_mb": 0,
+      "duration_seconds": 2.22,
+      "partitioned": false,
+      "partition_column": null
+    },
+    "ship_mode": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 20,
+      "size_mb": 0,
+      "duration_seconds": 2.28,
+      "partitioned": false,
+      "partition_column": null
+    }
+  },
+  "summary": {
+    "total_tables": 24,
+    "successful": 24,
+    "failed": 0,
+    "total_duration_seconds": 154.55,
+    "average_per_table_seconds": 6.44
+  },
+  "end_time": "2025-10-09T01:43:09.764512"
+}

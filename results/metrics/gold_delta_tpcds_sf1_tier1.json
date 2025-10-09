@@ -1,0 +1,100 @@
+{
+  "framework": "delta",
+  "benchmark": "tpcds",
+  "scale_factor": 1,
+  "tier": "tier1",
+  "start_time": "2025-10-08T14:37:08.865739",
+  "queries": {
+    "q03": {
+      "query_id": "q03",
+      "query_number": 3,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 11.29,
+      "row_count": 89
+    },
+    "q07": {
+      "query_id": "q07",
+      "query_number": 7,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.62,
+      "row_count": 100
+    },
+    "q19": {
+      "query_id": "q19",
+      "query_number": 19,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 14.1,
+      "row_count": 100
+    },
+    "q34": {
+      "query_id": "q34",
+      "query_number": 34,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 10.18,
+      "row_count": 455
+    },
+    "q42": {
+      "query_id": "q42",
+      "query_number": 42,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.97,
+      "row_count": 10
+    },
+    "q52": {
+      "query_id": "q52",
+      "query_number": 52,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 6.68,
+      "row_count": 100
+    },
+    "q55": {
+      "query_id": "q55",
+      "query_number": 55,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.71,
+      "row_count": 100
+    },
+    "q59": {
+      "query_id": "q59",
+      "query_number": 59,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 7.61,
+      "row_count": 100
+    },
+    "q73": {
+      "query_id": "q73",
+      "query_number": 73,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 9.52,
+      "row_count": 1
+    },
+    "q79": {
+      "query_id": "q79",
+      "query_number": 79,
+      "framework": "delta",
+      "status": "success",
+      "duration_seconds": 8.22,
+      "row_count": 100
+    }
+  },
+  "end_time": "2025-10-08T14:38:40.755954",
+  "summary": {
+    "total_queries": 10,
+    "successful_queries": 10,
+    "failed_queries": 0,
+    "total_query_time": 91.9,
+    "average_query_time": 9.19,
+    "min_query_time": 6.68,
+    "max_query_time": 14.1,
+    "total_execution_time": 91.89
+  }
+}

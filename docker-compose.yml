@@ -22,9 +22,18 @@ services:
       - /mnt/c/Users/italo/WSL_DATA/lakehouse-data:/data
       - ./spark_jobs:/opt/spark/jobs
       - ./configs:/opt/spark/configs
+      - ./scripts:/opt/spark/scripts
       - ./results:/opt/spark/results
     networks:
       - lakehouse-net
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
@@ -40,8 +49,8 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_CORES=${SPARK_WORKER_CORES:-2}
-      - SPARK_WORKER_MEMORY=${SPARK_WORKER_MEMORY:-4g}
+      - SPARK_WORKER_CORES=${SPARK_WORKER_CORES:-5}
+      - SPARK_WORKER_MEMORY=${SPARK_WORKER_MEMORY:-6g}
     env_file:
       - .env
     ports:
@@ -49,11 +58,20 @@ services:
     volumes:
       - /mnt/c/Users/italo/WSL_DATA/lakehouse-data:/data
       - ./spark_jobs:/opt/spark/jobs
+      - ./scripts:/opt/spark/scripts
       - ./results:/opt/spark/results
     depends_on:
       - spark-master
     networks:
       - lakehouse-net
+    deploy:
+      resources:
+        limits:
+          cpus: '5'
+          memory: 8G
+        reservations:
+          cpus: '3'
+          memory: 6G
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081"]
       interval: 30s
@@ -69,8 +87,8 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_CORES=${SPARK_WORKER_CORES:-2}
-      - SPARK_WORKER_MEMORY=${SPARK_WORKER_MEMORY:-4g}
+      - SPARK_WORKER_CORES=${SPARK_WORKER_CORES:-5}
+      - SPARK_WORKER_MEMORY=${SPARK_WORKER_MEMORY:-6g}
     env_file:
       - .env
     ports:
@@ -78,35 +96,25 @@ services:
     volumes:
       - /mnt/c/Users/italo/WSL_DATA/lakehouse-data:/data
       - ./spark_jobs:/opt/spark/jobs
+      - ./scripts:/opt/spark/scripts
       - ./results:/opt/spark/results
     depends_on:
       - spark-master
     networks:
       - lakehouse-net
+    deploy:
+      resources:
+        limits:
+          cpus: '5'
+          memory: 8G
+        reservations:
+          cpus: '3'
+          memory: 6G
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081"]
       interval: 30s
       timeout: 10s
       retries: 3
-
-  # ============================================================================
-  # TPC-H DATA GENERATOR
-  # ============================================================================
-
-  tpchgen:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.tpchgen
-    container_name: tpchgen
-    env_file:
-      - .env
-    volumes:
-      - /mnt/c/Users/italo/WSL_DATA/lakehouse-data:/data
-      - ./scripts:/app/scripts
-    networks:
-      - lakehouse-net
-    profiles:
-      - datagen
 
 networks:
   lakehouse-net:

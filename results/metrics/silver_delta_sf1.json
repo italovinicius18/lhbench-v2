@@ -1,0 +1,65 @@
+{
+  "framework": "delta",
+  "scale_factor": 1,
+  "start_time": "2025-10-07T17:44:40.184447",
+  "tables": {
+    "customer": {
+      "status": "success",
+      "row_count": 150000,
+      "duration_seconds": 21.685707,
+      "size_mb": 94.71,
+      "table_location": "/data/silver/delta/sf1/customer"
+    },
+    "orders": {
+      "status": "success",
+      "row_count": 1500000,
+      "duration_seconds": 15.100401,
+      "size_mb": 428.81,
+      "table_location": "/data/silver/delta/sf1/orders"
+    },
+    "lineitem": {
+      "status": "success",
+      "row_count": 6001215,
+      "duration_seconds": 39.453708,
+      "size_mb": 1556.15,
+      "table_location": "/data/silver/delta/sf1/lineitem"
+    },
+    "supplier": {
+      "status": "success",
+      "row_count": 10000,
+      "duration_seconds": 15.186389,
+      "size_mb": 6.1,
+      "table_location": "/data/silver/delta/sf1/supplier"
+    },
+    "part": {
+      "status": "success",
+      "row_count": 200000,
+      "duration_seconds": 19.005727,
+      "size_mb": 48.18,
+      "table_location": "/data/silver/delta/sf1/part"
+    },
+    "partsupp": {
+      "status": "success",
+      "row_count": 800000,
+      "duration_seconds": 24.186518,
+      "size_mb": 325.22,
+      "table_location": "/data/silver/delta/sf1/partsupp"
+    },
+    "nation": {
+      "status": "success",
+      "row_count": 25,
+      "duration_seconds": 4.64008,
+      "size_mb": 0.01,
+      "table_location": "/data/silver/delta/sf1/nation"
+    },
+    "region": {
+      "status": "success",
+      "row_count": 5,
+      "duration_seconds": 4.273992,
+      "size_mb": 0.01,
+      "table_location": "/data/silver/delta/sf1/region"
+    }
+  },
+  "end_time": "2025-10-07T17:47:11.482311",
+  "total_duration": 151.297864
+}

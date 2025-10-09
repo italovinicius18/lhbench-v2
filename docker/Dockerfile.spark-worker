@@ -30,6 +30,14 @@ RUN mkdir -p /data /opt/spark/jobs
 
 WORKDIR /opt/spark
 
+# Copy entrypoint script
+COPY docker/worker-entrypoint.sh /opt/spark/worker-entrypoint.sh
+RUN chmod +x /opt/spark/worker-entrypoint.sh
+
+# Set default values for worker resources
+ENV SPARK_WORKER_CORES=5
+ENV SPARK_WORKER_MEMORY=3g
+
 EXPOSE 8081
 
-CMD ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077"]
+ENTRYPOINT ["/opt/spark/worker-entrypoint.sh"]

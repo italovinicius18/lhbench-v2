@@ -1,0 +1,256 @@
+{
+  "framework": "iceberg",
+  "benchmark": "tpcds",
+  "scale_factor": 1,
+  "start_time": "2025-10-09T00:24:43.495183",
+  "tables": {
+    "store_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 2880404,
+      "size_mb": 0,
+      "duration_seconds": 14.18,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_store_sales"
+    },
+    "store_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 287867,
+      "size_mb": 0,
+      "duration_seconds": 3.38,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_store_returns"
+    },
+    "catalog_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 1441548,
+      "size_mb": 0,
+      "duration_seconds": 6.88,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_catalog_sales"
+    },
+    "catalog_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 144067,
+      "size_mb": 0,
+      "duration_seconds": 4.42,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_catalog_returns"
+    },
+    "web_sales": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 719384,
+      "size_mb": 0,
+      "duration_seconds": 4.01,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_web_sales"
+    },
+    "web_returns": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 71654,
+      "size_mb": 0,
+      "duration_seconds": 2.03,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_web_returns"
+    },
+    "inventory": {
+      "status": "success",
+      "table_type": "fact",
+      "rows": 11745000,
+      "size_mb": 0,
+      "duration_seconds": 3.25,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_inventory"
+    },
+    "store": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 12,
+      "size_mb": 0,
+      "duration_seconds": 1.92,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_store"
+    },
+    "call_center": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 6,
+      "size_mb": 0,
+      "duration_seconds": 2.5,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_call_center"
+    },
+    "catalog_page": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 11718,
+      "size_mb": 0,
+      "duration_seconds": 2.46,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_catalog_page"
+    },
+    "web_site": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 30,
+      "size_mb": 0,
+      "duration_seconds": 2.49,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_web_site"
+    },
+    "web_page": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 60,
+      "size_mb": 0,
+      "duration_seconds": 1.99,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_web_page"
+    },
+    "warehouse": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 5,
+      "size_mb": 0,
+      "duration_seconds": 2.32,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_warehouse"
+    },
+    "customer": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 100000,
+      "size_mb": 0,
+      "duration_seconds": 3.22,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_customer"
+    },
+    "customer_address": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 50000,
+      "size_mb": 0,
+      "duration_seconds": 4.17,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_customer_address"
+    },
+    "customer_demographics": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 1920800,
+      "size_mb": 0,
+      "duration_seconds": 3.81,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_customer_demographics"
+    },
+    "date_dim": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 73049,
+      "size_mb": 0,
+      "duration_seconds": 3.25,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_date_dim"
+    },
+    "time_dim": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 86400,
+      "size_mb": 0,
+      "duration_seconds": 3.48,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_time_dim"
+    },
+    "item": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 18000,
+      "size_mb": 0,
+      "duration_seconds": 3.48,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_item"
+    },
+    "promotion": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 300,
+      "size_mb": 0,
+      "duration_seconds": 4.5,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_promotion"
+    },
+    "household_demographics": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 7200,
+      "size_mb": 0,
+      "duration_seconds": 4.67,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_household_demographics"
+    },
+    "income_band": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 20,
+      "size_mb": 0,
+      "duration_seconds": 4.84,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_income_band"
+    },
+    "reason": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 35,
+      "size_mb": 0,
+      "duration_seconds": 5.51,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_reason"
+    },
+    "ship_mode": {
+      "status": "success",
+      "table_type": "dimension",
+      "rows": 20,
+      "size_mb": 0,
+      "duration_seconds": 8.33,
+      "partitioned": false,
+      "partition_column": null,
+      "iceberg_table_name": "tpcds_ship_mode"
+    }
+  },
+  "summary": {
+    "total_tables": 24,
+    "successful": 24,
+    "failed": 0,
+    "total_duration_seconds": 101.1,
+    "average_per_table_seconds": 4.21
+  },
+  "end_time": "2025-10-09T00:26:24.598147"
+}
